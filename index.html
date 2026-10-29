@@ -148,7 +148,9 @@ details[open] .chev{transform:rotate(180deg)}
 .daypick button small{font-size:12px}
 .daypick button b{font-size:19px;font-weight:700;font-variant-numeric:tabular-nums}
 .daypick button.today{border-color:var(--accent);color:var(--fg)}
-.day{background:var(--surface);border-radius:18px;padding:18px;display:flex;flex-direction:column;gap:12px;scroll-margin-top:16px}
+.pickbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:4;background:var(--surface);padding-block:10px;border-bottom:1px solid var(--line)}
+.daypick button.cur{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.day{background:var(--surface);border-radius:18px;padding:18px;display:flex;flex-direction:column;gap:12px;scroll-margin-top:calc(100px + env(safe-area-inset-top,0px))}
 .day.today{background:transparent;border:2px solid var(--accent)}
 .day .dh{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap}
 .day .dn{font-size:15px;font-weight:700;color:var(--accent)}
@@ -868,8 +870,8 @@ function journey(){
   return `<header class="band gut">
       <h1>המסע</h1>
       <p class="sub">${TRIP_DAYS} ימים · ${HOTELS.length} מקומות לינה · ${short(TRIP.start)}–${short(TRIP.end)}</p>
-      <nav class="daypick" aria-label="קפיצה ליום">${picks}</nav>
     </header>
+    <div class="pickbar gut"><nav class="daypick" aria-label="קפיצה ליום">${picks}</nav></div>
     <main class="gut">${cards}</main>`;
 }
 
@@ -1095,6 +1097,7 @@ function render(keep){
   if (!keep) { $view.classList.remove('view'); void $view.offsetWidth; $view.classList.add('view'); }
   document.querySelectorAll('nav.tabs a').forEach(a => a.dataset.tab === TAB_OF[r] ? a.setAttribute('aria-current','page') : a.removeAttribute('aria-current'));
   if (!keep) window.scrollTo(0,0);
+  if (r === 'journey') requestAnimationFrame(markDay);
   if (r === 'journey' && !keep) {
     const t = document.querySelector('.day.today');
     if (t) t.scrollIntoView({block:'start'});
@@ -1113,6 +1116,24 @@ $view.addEventListener('click', e => {
     catch (err) { toast(v); }
   }
 });
+
+/* סרגל הימים: מסמן את היום שמוצג כרגע בזמן גלילה */
+function markDay(){
+  const bar = document.querySelector('.pickbar'); if (!bar) return;
+  const y = bar.getBoundingClientRect().bottom + 48;
+  let cur = null;
+  document.querySelectorAll('.day').forEach(d => { if (d.getBoundingClientRect().top <= y) cur = d; });
+  if (!cur) cur = document.querySelector('.day');
+  if (!cur) return;
+  const nav = bar.querySelector('.daypick');
+  nav.querySelectorAll('button').forEach(b => {
+    const on = b.dataset.goto === cur.id;
+    if (on && !b.classList.contains('cur')) nav.scrollTo({ left: b.offsetLeft - nav.clientWidth / 2 + b.offsetWidth / 2 });
+    b.classList.toggle('cur', on);
+  });
+}
+let pickRaf = 0;
+window.addEventListener('scroll', () => { if (pickRaf) return; pickRaf = requestAnimationFrame(() => { pickRaf = 0; markDay(); }); }, { passive: true });
 
 let tt;
 function toast(msg){ const t = document.getElementById('toast'); t.textContent = msg; t.hidden = false; clearTimeout(tt); tt = setTimeout(() => t.hidden = true, 2000); }
