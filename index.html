@@ -1,0 +1,1125 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0F1A15">
+<meta name="description" content="אפליקציית הטיול לקוסטה ריקה, 24.11–16.12.2026">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="קוסטה ריקה">
+<title>קוסטה ריקה 2026</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700;800&display=swap">
+<style>
+html{-webkit-text-size-adjust:100%}
+body{margin:0;-webkit-tap-highlight-color:transparent}
+[hidden]{display:none!important}
+img{max-width:100%}
+:root{padding-top:env(safe-area-inset-top,0px)}
+/* Layout: one-column phone app, header band + scrolling content + fixed 3-tab bar; dark night-jungle look committed in one theme */
+:root{
+  --bg:#0F1A15; --surface:#1A2A22; --surface-2:#22352B; --bar:#16241D; --line:#2C3D34;
+  --fg:#F3F1EA; --fg-2:#E4E8E2; --muted:#B7C2BB; --accent:#F2B544; --on-accent:#0F1A15;
+  --warn-bg:#3A2E12; --rain:#8EC5E8;
+  --font:'Rubik', 'Assistant', 'Arial Hebrew', system-ui, sans-serif;
+  color-scheme:dark;
+}
+html,body{height:100%}
+body{background:var(--bg);color:var(--fg);font-family:var(--font);font-size:18px;line-height:1.45;direction:rtl}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+*{box-sizing:border-box}
+a{color:var(--accent)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:6px}
+.app{min-height:100%;display:flex;flex-direction:column;max-width:560px;margin:0 auto}
+.gut{padding-left:max(20px, env(safe-area-inset-left,0px));padding-right:max(20px, env(safe-area-inset-right,0px))}
+header.band{background:var(--surface);padding-block:22px;display:flex;flex-direction:column;gap:6px}
+h1{margin:0;font-size:32px;font-weight:800;line-height:1.1;text-wrap:balance}
+h2{margin:0;font-size:22px;font-weight:800;text-wrap:balance}
+h3{margin:0;font-size:20px;font-weight:700}
+.sub{margin:0;font-size:17px;color:var(--muted)}
+.back{align-self:flex-start;min-height:44px;display:inline-flex;align-items:center;gap:6px;font-size:17px;text-decoration:none;margin-inline-start:-6px;padding-inline:6px}
+main{flex-grow:1;padding-block:20px 120px;display:flex;flex-direction:column;gap:18px}
+.label{margin:0;font-size:15px;font-weight:700;color:var(--muted);letter-spacing:.02em}
+section.blk{display:flex;flex-direction:column;gap:10px}
+
+/* home */
+.today-date{font-size:18px;color:var(--fg-2);margin:0}
+.count{display:flex;align-items:baseline;gap:12px;margin-top:6px}
+.count b{font-size:64px;font-weight:800;color:var(--accent);line-height:1;font-variant-numeric:tabular-nums}
+.count span{font-size:20px;font-weight:500}
+.wx{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.wx-tile{background:var(--surface);border-radius:16px;padding:14px 10px;display:flex;flex-direction:column;gap:4px;align-items:center;text-align:center;text-decoration:none;color:var(--fg);min-width:0}
+.wx-tile.now{outline:2px solid var(--accent)}
+.wx-day{font-size:15px;font-weight:700;color:var(--muted)}
+.wx-place{font-size:15px;font-weight:500;line-height:1.25;min-height:2.5em;display:flex;align-items:center}
+.wx-t{font-size:26px;font-weight:800;font-variant-numeric:tabular-nums;line-height:1.1}
+.wx-t small{font-size:16px;font-weight:500;color:var(--muted)}
+.wx-c{font-size:14px;color:var(--muted)}
+.note-sm{margin:0;font-size:14px;color:var(--muted)}
+.wx.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+.wx-tag{font-size:12px;color:var(--muted);border:1px solid var(--line);border-radius:6px;padding:1px 6px}
+.wx-today{background:var(--surface);border-radius:18px;padding:18px;display:flex;flex-direction:column;gap:14px;outline:2px solid var(--accent)}
+.wt-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.wt-top>div{display:flex;flex-direction:column;gap:2px;min-width:0}
+.wt-big{font-size:44px;font-weight:800;line-height:1.05;font-variant-numeric:tabular-nums}
+.wt-big small{font-size:22px;font-weight:500;color:var(--muted)}
+.wt-ph{font-size:18px;color:var(--fg-2)}
+.wt-meta{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:16px;color:var(--fg-2)}
+.wt-meta b{color:var(--fg)}
+.hours{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:thin}
+.hr{flex-shrink:0;width:60px;background:var(--bg);border-radius:12px;padding:10px 4px;display:flex;flex-direction:column;align-items:center;gap:4px}
+.hr .ht{font-size:14px;color:var(--muted);font-variant-numeric:tabular-nums}
+.hr .hv{font-size:20px;font-weight:700;font-variant-numeric:tabular-nums}
+.hr .hp{font-size:13px;color:var(--rain);font-variant-numeric:tabular-nums}
+.summary{border:2px solid var(--accent);border-radius:18px;padding:18px;display:flex;flex-direction:column;gap:10px}
+.summary .loc{font-size:24px;font-weight:800}
+.summary ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px}
+.summary li{display:flex;gap:10px;align-items:flex-start;font-size:18px;line-height:1.4}
+.summary li svg{flex-shrink:0;margin-top:2px}
+.linkbtn{align-self:flex-start;min-height:44px;display:inline-flex;align-items:center;gap:6px;font-size:17px;font-weight:700;text-decoration:none}
+
+/* cards */
+.card{background:var(--surface);border-radius:18px;padding:18px;display:flex;flex-direction:column;gap:14px}
+.card.hl{background:transparent;border:2px solid var(--accent)}
+.chip{align-self:flex-start;font-size:15px;font-weight:700;border-radius:8px;padding:4px 10px;background:var(--accent);color:var(--on-accent)}
+.chip.ghost{background:transparent;color:var(--fg);border:1px solid var(--muted);padding:3px 10px}
+.head{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.head .d{font-size:17px;color:var(--muted)}
+.kv{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.kv.top{border-top:1px solid var(--line);padding-top:14px}
+.kv div{display:flex;flex-direction:column;gap:2px;min-width:0}
+.kv span{font-size:15px;color:var(--muted)}
+.kv strong{font-size:18px;font-weight:700;overflow-wrap:anywhere}
+.code{letter-spacing:.06em;font-variant-numeric:tabular-nums}
+.btn{min-height:52px;display:flex;align-items:center;justify-content:center;gap:8px;border-radius:14px;font:inherit;font-size:18px;font-weight:700;text-decoration:none;cursor:pointer;border:2px solid var(--accent);background:var(--accent);color:var(--on-accent);padding-inline:10px}
+.btn.out{background:transparent;color:var(--accent)}
+.btns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.notice{background:var(--warn-bg);border-radius:14px;padding:14px 16px;display:flex;gap:12px;align-items:flex-start;font-size:16px;line-height:1.5}
+.notice svg{flex-shrink:0;margin-top:2px}
+.bullets{margin:0;padding-inline-start:20px;display:flex;flex-direction:column;gap:6px;font-size:16px;color:var(--fg-2)}
+
+/* bookings tiles */
+.tiles{display:flex;flex-direction:column;gap:12px}
+.tile{background:var(--surface);border-radius:18px;padding:18px;display:flex;gap:16px;align-items:center;text-decoration:none;color:var(--fg);min-height:96px}
+.tile .ic{width:56px;height:56px;border-radius:16px;background:var(--bg);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.tile .tx{display:flex;flex-direction:column;gap:2px;flex-grow:1;min-width:0}
+.tile .tt{font-size:22px;font-weight:800}
+.tile .ts{font-size:16px;color:var(--muted)}
+.tile .ch{flex-shrink:0;transform:scaleX(-1)}
+
+/* flights */
+.seg{display:flex;flex-direction:column;gap:10px}
+.ends{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.end{display:flex;flex-direction:column;min-width:0}
+.end:last-child{align-items:flex-end;text-align:left}
+.end .tm{font-size:30px;font-weight:800;font-variant-numeric:tabular-nums;line-height:1.15}
+.end .ap{font-size:18px;font-weight:700}
+.end .ci{font-size:15px;color:var(--muted)}
+.meta{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:16px;color:var(--fg-2)}
+.old{font-size:15px;color:var(--muted);text-decoration:line-through}
+.lay{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;background:var(--bg);font-size:16px;color:var(--muted)}
+.lay b{color:var(--fg)}
+
+/* hotels */
+details.hotel{background:var(--surface);border-radius:18px;overflow:hidden}
+details.hotel[open]{background:transparent;border:2px solid var(--line)}
+details.hotel.next{border:2px solid var(--accent)}
+details.hotel summary{list-style:none;cursor:pointer;padding:16px 18px;display:flex;gap:14px;align-items:center;min-height:72px}
+details.hotel summary::-webkit-details-marker{display:none}
+.nights{flex-shrink:0;width:52px;text-align:center;display:flex;flex-direction:column;line-height:1.1}
+.nights b{font-size:26px;font-weight:800;color:var(--accent);font-variant-numeric:tabular-nums}
+.nights span{font-size:13px;color:var(--muted)}
+.hsum{flex-grow:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.hsum .n{font-size:19px;font-weight:700;line-height:1.25}
+.hsum .s{font-size:15px;color:var(--muted)}
+.chev{flex-shrink:0;transition:transform .15s}
+details[open] .chev{transform:rotate(180deg)}
+.hbody{padding:0 18px 18px;display:flex;flex-direction:column;gap:14px}
+.addr{font-size:16px;color:var(--fg-2);margin:0;user-select:text}
+
+/* journey */
+.daypick{display:flex;gap:8px;overflow-x:auto;padding-block:4px 2px;scrollbar-width:none}
+.daypick::-webkit-scrollbar{display:none}
+.daypick button{flex-shrink:0;min-width:52px;min-height:56px;border-radius:14px;border:1px solid var(--line);background:transparent;color:var(--muted);font:inherit;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;padding:0 6px}
+.daypick button small{font-size:12px}
+.daypick button b{font-size:19px;font-weight:700;font-variant-numeric:tabular-nums}
+.daypick button.today{border-color:var(--accent);color:var(--fg)}
+.day{background:var(--surface);border-radius:18px;padding:18px;display:flex;flex-direction:column;gap:12px;scroll-margin-top:16px}
+.day.today{background:transparent;border:2px solid var(--accent)}
+.day .dh{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap}
+.day .dn{font-size:15px;font-weight:700;color:var(--accent)}
+.day .dd{font-size:15px;color:var(--muted)}
+.day h3{font-size:22px;font-weight:800}
+.tl{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px}
+.tl li{display:flex;gap:12px;align-items:flex-start;font-size:17px;line-height:1.45}
+.tl li svg{flex-shrink:0;margin-top:3px}
+.tl li .m{color:var(--muted);font-size:15px}
+.tip{font-size:15px;color:var(--fg-2);background:var(--bg);border-radius:12px;padding:10px 12px;margin:0}
+.tl.log{background:var(--bg);border-radius:12px;padding:12px;gap:8px}
+.tl.log li{font-size:15px;color:var(--fg-2)}
+.acts{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:16px}
+.act{position:relative;padding-inline-start:22px;display:flex;flex-direction:column;gap:4px}
+.act::before{content:"";position:absolute;inset-inline-start:3px;top:9px;width:10px;height:10px;border-radius:50%;background:var(--accent)}
+.act.alt::before,.act.opt::before{background:transparent;border:2px solid var(--muted);width:6px;height:6px}
+.act.free::before{background:var(--muted)}
+.an{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.an b{font-size:19px;font-weight:700}
+.act p{margin:0;font-size:17px;color:var(--fg-2);line-height:1.45}
+.act p.atip{font-size:16px;color:var(--fg)}
+p.ag{margin:0;font-size:15px;color:var(--muted)}
+.kchip{font-size:13px;border:1px solid var(--muted);border-radius:6px;padding:1px 7px;color:var(--muted)}
+.links{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.lk{min-height:44px;display:inline-flex;align-items:center;gap:6px;padding:0 14px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--accent);text-decoration:none;font-size:15px;font-weight:700}
+ul.info{margin:2px 0 0;padding-inline-start:18px;display:flex;flex-direction:column;gap:4px;font-size:15px;color:var(--fg-2);line-height:1.45}
+.bringwrap{display:flex;flex-direction:column;gap:6px}
+.bring{display:flex;flex-wrap:wrap;gap:6px}
+.bring span{font-size:14px;background:var(--bg);border-radius:8px;padding:5px 10px;color:var(--fg-2)}
+.check{display:flex;flex-direction:column;gap:10px}
+.ck{background:var(--surface);border-radius:16px;padding:14px 16px;display:flex;gap:14px;align-items:flex-start}
+.ck input{width:26px;height:26px;margin:2px 0 0;accent-color:var(--accent);flex-shrink:0}
+.ck label{display:flex;flex-direction:column;gap:2px;flex-grow:1;min-width:0;cursor:pointer}
+.ck .cd{font-size:14px;color:var(--accent);font-weight:700}
+.ck .ct{font-size:18px;font-weight:700}
+.ck .cm{font-size:15px;color:var(--muted)}
+.ck.done .ct{text-decoration:line-through;color:var(--muted)}
+
+nav.tabs{position:fixed;bottom:0;left:0;right:0;background:var(--bar);padding-top:8px;padding-bottom:calc(12px + env(safe-area-inset-bottom,0px));padding-left:max(10px, env(safe-area-inset-left,0px));padding-right:max(10px, env(safe-area-inset-right,0px));z-index:5;border-top:1px solid var(--line)}
+nav.tabs .in{max-width:560px;margin:0 auto;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+nav.tabs a{min-height:52px;display:flex;align-items:center;justify-content:center;gap:8px;border-radius:12px;font-size:17px;color:var(--muted);text-decoration:none}
+nav.tabs a[aria-current="page"]{background:var(--accent);color:var(--on-accent);font-weight:700}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(90px + env(safe-area-inset-bottom,0px));background:var(--fg);color:var(--bg);padding:10px 18px;border-radius:12px;font-size:16px;font-weight:700;z-index:6}
+@media (prefers-reduced-motion:no-preference){.view{animation:in .18s ease-out}@keyframes in{from{opacity:.4}to{opacity:1}}}
+</style>
+</head>
+<body>
+
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-plane" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></symbol>
+  <symbol id="i-bed" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M2 4v16M2 8h18a2 2 0 0 1 2 2v10M2 17h20M6 8v9"/></symbol>
+  <symbol id="i-car" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></g></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></g></symbol>
+  <symbol id="i-map" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2z"/><path d="M9 4v14M15 6v14"/></g></symbol>
+  <symbol id="i-ticket" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8a2 2 0 0 0 2-2h14a2 2 0 0 0 2 2v2a2 2 0 0 0 0 4v2a2 2 0 0 0-2 2H5a2 2 0 0 0-2-2v-2a2 2 0 0 0 0-4z"/><path d="M14 6v12" stroke-dasharray="2 2"/></g></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></g></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></g></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></g></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></g></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></g></symbol>
+  <symbol id="i-dot" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4" fill="currentColor"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></g></symbol>
+  <symbol id="i-partly" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2M4.9 4.9l1.4 1.4M2 12h2M19.1 4.9l-1.4 1.4"/><path d="M8 12a4 4 0 0 1 7.5-2"/><path d="M17 20H9a4 4 0 1 1 .9-7.9A5 5 0 0 1 19 14a3 3 0 0 1-2 6z"/></g></symbol>
+  <symbol id="i-rain" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 16.6A5 5 0 0 0 18 7h-1.3A8 8 0 1 0 4 15.3"/><path d="M8 19v2M8 13v2M16 19v2M16 13v2M12 21v2M12 15v2"/></g></symbol>
+  <symbol id="i-cloud" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M17.5 19H9a7 7 0 1 1 6.7-9h1.8a4.5 4.5 0 1 1 0 9z"/></symbol>
+</svg>
+
+<div class="app"><div id="view" class="view"></div></div>
+
+<nav class="tabs" aria-label="ניווט ראשי">
+  <div class="in">
+    <a href="#home" data-tab="home"><svg width="22" height="22" aria-hidden="true"><use href="#i-home"/></svg>בית</a>
+    <a href="#journey" data-tab="journey"><svg width="22" height="22" aria-hidden="true"><use href="#i-map"/></svg>מסע</a>
+    <a href="#bookings" data-tab="bookings"><svg width="22" height="22" aria-hidden="true"><use href="#i-ticket"/></svg>הזמנות</a>
+  </div>
+</nav>
+<div id="toast" class="toast" hidden></div>
+
+<script>
+/* ================= נתוני הטיול (מתוך המייל) ================= */
+const TRIP = { start:'2026-11-24', end:'2026-12-16' };
+
+const FLIGHTS = {
+  airline:'SWISS / Lufthansa', bookingCode:'XNRW8K', ticket:'7242349647473',
+  passenger:'Menachem Shoua', fare:'Economy Flex',
+  baggage:'מזוודה 23 ק"ג · טרולי 8 ק"ג · תיק אישי',
+  manageUrl:'https://www.swiss.com/il/en/manage-booking',
+  scheduleChanged:true,
+  legs:[
+    { dir:'הלוך', date:'2026-11-24', label:'שלישי 24.11', total:'22:00 שעות', departISO:'2026-11-24T05:15:00+02:00',
+      segments:[
+        { flight:'LH 691', op:'Lufthansa', plane:'Airbus A321neo', seat:'לא נבחר',
+          from:{code:'TLV',city:'תל אביב',term:'טרמינל 3',time:'05:15'}, to:{code:'FRA',city:'פרנקפורט',term:'טרמינל 1',time:'08:55'} },
+        { layover:'פרנקפורט', dur:'5:05 שעות' },
+        { flight:'LH 518', op:'Lufthansa', plane:'Boeing 787-9', seat:'16H · Extra Legroom',
+          from:{code:'FRA',city:'פרנקפורט',term:'טרמינל 1',time:'14:00',old:'13:40'}, to:{code:'SJO',city:'סן חוסה',term:'טרמינל M',time:'19:15',old:'18:55'} }
+      ]},
+    { dir:'חזור', date:'2026-12-16', label:'רביעי 16.12', total:'16:15 שעות', departISO:'2026-12-16T16:40:00-06:00',
+      segments:[
+        { flight:'LX 8037', op:'Edelweiss Air', plane:'Airbus A350-900', seat:'לא נבחר',
+          from:{code:'SJO',city:'סן חוסה',term:'טרמינל M',time:'16:40'}, to:{code:'ZRH',city:'ציריך',term:'',time:'10:15',plus:'+1'} },
+        { layover:'ציריך', dur:'1:50 שעות' },
+        { flight:'LX 252', op:'SWISS', plane:'Airbus A321neo', seat:'לא נבחר',
+          from:{code:'ZRH',city:'ציריך',term:'',time:'12:05',old:'12:20'}, to:{code:'TLV',city:'תל אביב',term:'טרמינל 3',time:'16:55',old:'17:15'} }
+      ]}
+  ]
+};
+
+const CAR = {
+  broker:'אופרן', ref:'45381058', supplier:'Adobe Rent a Car', model:'Hyundai Kona או דומה',
+  specs:'אוטומטי · 5 מקומות · מזגן · 4 דלתות',
+  pickup:{ place:'שדה התעופה סן חוסה (SJO)', when:'שלישי 24.11 · 20:00', hours:'05:00–22:00' },
+  dropoff:{ place:'שדה התעופה סן חוסה (SJO)', when:'רביעי 16.12 · 15:00', hours:'05:00–22:00' },
+  days:22, driver:'Menachem Shoua', flightNo:'LH518',
+  deductible:'$1,130', deposit:'$1,130', fuel:'מלא למלא',
+  included:['ביטוח נזק וגניבה (עם השתתפות עצמית)','צד ג׳ עד $1,500,000','ק"מ ללא הגבלה','מסי שדה ומע"מ','אופרן פלוס'],
+  bring:['רישיון נהיגה ישראלי (פיזי)','רישיון נהיגה בינלאומי (פיזי)','דרכון','כרטיס אשראי בינלאומי על שם הנהג (עם קוד סודי)','שובר מודפס'],
+  phone:'03-7951010', whatsapp:'+972 54-795-2020', email:'help@ofran.com',
+  notes:['הרכב נשמר עד שעה אחרי מועד האיסוף. הטיסה נוחתת ב-19:15, כך שיש מרווח קטן.','אסור לצאת עם הרכב מקוסטה ריקה.']
+};
+
+/* כל לילה במסלול – מתוך אישורי Booking.com */
+const HOTELS = [
+  { id:'sj1', name:'Hotel Casa 69', area:'סן חוסה', place:'San José', in:'2026-11-24', out:'2026-11-25', checkin:'15:00–22:30', checkout:'עד 11:00',
+    room:'Queen Room', breakfast:'כלול', conf:'5646215207', phone:'+506 2256 8879', addr:'69 Calle 25A, San José',
+    cancel:'ביטול חינם עד 9.11', pay:'מזומן בלבד. לפי אישור Booking המלון אמור לפנות עם הנחיות לתשלום מראש ב-PayPal. במייל לא הגיעה פנייה, כדאי לבדוק בצ׳אט של Booking. חניה $15 ללילה.' },
+  { id:'fortuna', name:'Hotel Roca Negra Del Arenal', area:'לה פורטונה (ארנל)', place:'La Fortuna', in:'2026-11-25', out:'2026-11-29', checkin:'14:00–20:30', checkout:'08:00–12:00',
+    room:'Deluxe King Room', breakfast:'$8 לאדם', conf:'5201102569', phone:'+506 2479 9237', addr:'2 km west of the park, road to Arenal Volcano, La Fortuna',
+    cancel:'ביטול חינם עד 19.11', pay:'מזומן בלבד. לפי אישור Booking המלון אמור לפנות עם הנחיות למקדמה בהעברה בנקאית. במייל לא הגיעה פנייה, כדאי לבדוק בצ׳אט של Booking.' },
+  { id:'bijagua', name:'Tenorio Lodge', area:'ביחאגואה (ריו סלסטה)', place:'Bijagua', in:'2026-11-29', out:'2026-11-30', checkin:'14:00–20:00', checkout:'עד 11:00',
+    room:'Bungalow with Patio', breakfast:'כלול', conf:'6687968735', phone:'+506 2466 8282', addr:'Camino del Retiro, 250 m north, Bijagua',
+    cancel:'ביטול חינם עד 21.11', pay:'חיוב מלא 7 ימים לפני ההגעה.' },
+  { id:'rincon', name:'Casa Rural Aroma de Campo', area:'קורובנדה (רינקון דה לה ביֶחה)', place:'Curubandé', in:'2026-11-30', out:'2026-12-02', checkin:'14:00–19:00', checkout:'08:00–11:00',
+    room:'Standard Double with Fan', breakfast:'כלול', conf:'6031786665', phone:'+506 2665 0011', addr:'2 km east of the church of Curubandé & 300 m north',
+    cancel:'ביטול חינם עד 30.10', pay:'לפי אישור Booking נדרש תשלום בהעברה בנקאית לפני ההגעה, והמלון אמור לפנות עם הנחיות. במייל לא הגיעה פנייה, כדאי לבדוק בצ׳אט של Booking.', tip:'הפארק הלאומי רינקון דה לה ביֶחה סגור בימי שני.' },
+  { id:'monteverde', name:'Los Pinos Cabins & Reserve', area:'מונטוורדה', place:'Monteverde', in:'2026-12-02', out:'2026-12-04', checkin:'15:00–21:00', checkout:'07:00–11:00',
+    room:'Double Room with Balcony', breakfast:'לא כלול', conf:'5507886770', phone:'+506 2645 5252', addr:'150 m NE of Rafael Arguedas Herrera school, Monteverde',
+    cancel:'ביטול חינם עד 28.11', pay:'תשלום במקום.' },
+  { id:'teresa', name:'Manala Hotel', area:'סנטה תרזה', place:'Santa Teresa', in:'2026-12-04', out:'2026-12-07', checkin:'מ-14:00', checkout:'עד 11:00',
+    room:'King Room with Pool View', breakfast:'כלול', conf:'6068479212', phone:'+506 2640 1132', addr:'800 m north of the Santa Teresa football field',
+    cancel:'כבר לא ניתן לבטל בחינם', pay:'כרטיס אשראי בלבד, לא מזומן.' },
+  { id:'dominical', name:'Tribe Boutique Hotel', area:'דומיניקל', place:'Dominical', in:'2026-12-07', out:'2026-12-11', checkin:'15:00–19:00', checkout:'08:00–11:00',
+    room:'Deluxe Double Room', breakfast:'לא כלול', conf:'5074752873', phone:'+506 8351 6819', addr:'50 m south of the school, next to ICE, Dominical',
+    cancel:'ביטול חינם עד 22.11', pay:'תשלום במקום (מזומן או אשראי).' },
+  { id:'orosi', name:'Orosi Lodge', area:'אורוסי', place:'Orosí', in:'2026-12-11', out:'2026-12-12', checkin:'15:00–19:00', checkout:'07:00–11:00',
+    room:'Cottage', breakfast:'$14 לאדם', conf:'6831145921', phone:'+506 2533 3578', addr:'25 m east of Balneario Martínez, Orosí',
+    cancel:'ביטול חינם עד 3.12', pay:'תשלום במקום.', tip:'צ׳ק-אין עד 19:00. אם מאחרים, להודיע למלון.' },
+  { id:'puertoviejo', name:'Bungalows Punta Uva', area:'פוארטו ביֶחו (פונטה אובה)', place:'Puerto Viejo', in:'2026-12-12', out:'2026-12-15', checkin:'15:00–21:00', checkout:'10:00–11:00',
+    room:'Junior Suite', breakfast:'כלול', conf:'5288070967', phone:'+506 6122 6876', addr:'Punta Uva, Puerto Viejo de Talamanca, Limón',
+    cancel:'ביטול חינם עד 4.12', pay:'הלילה הראשון שולם מראש, היתר במקום.' },
+  { id:'sj2', name:'awā San José', area:'סן חוסה (בריו אסקלנטה)', place:'San José', in:'2026-12-15', out:'2026-12-16', checkin:'15:00–22:00', checkout:'07:00–11:00',
+    room:'Bungalow with Garden View', breakfast:'כלול', conf:'6578722694', phone:'+506 6290 8494', addr:'Ave 9, Calle 33 y 35, Barrio Escalante, San José',
+    cancel:'ביטול חינם עד 9.12', pay:'Booking.com יחייב אוטומטית.' }
+];
+
+/* זמני נסיעה משוערים בין מקומות הלינה – לבדוק ב-Waze ביום הנסיעה */
+const DRIVES = {
+  'airport>sj1':'כ-20 דקות', 'sj1>fortuna':'כ-3 שעות', 'fortuna>bijagua':'כ-2 שעות', 'bijagua>rincon':'כ-1.5 שעות',
+  'rincon>monteverde':'כ-3 שעות', 'monteverde>teresa':'כ-4.5 שעות', 'teresa>dominical':'כ-5 שעות',
+  'dominical>orosi':'כ-4 שעות', 'orosi>puertoviejo':'כ-4 שעות', 'puertoviejo>sj2':'כ-4.5 שעות', 'sj2>airport':'כ-30 דקות'
+};
+
+/* מזג אוויר טיפוסי לסוף נובמבר–דצמבר (ממוצעים, לא תחזית) */
+const CLIMATE = {
+  'San José':{hi:24,lo:16,c:'partly',t:'ממטרים קלים'}, 'La Fortuna':{hi:28,lo:20,c:'rain',t:'גשום לסירוגין'},
+  'Bijagua':{hi:26,lo:18,c:'rain',t:'טפטוף ועננות'}, 'Curubandé':{hi:31,lo:21,c:'sun',t:'יבש ורוחני'},
+  'Monteverde':{hi:20,lo:14,c:'cloud',t:'ערפל ורוח'}, 'Santa Teresa':{hi:31,lo:23,c:'sun',t:'יבש ושמשי'},
+  'Dominical':{hi:31,lo:23,c:'partly',t:'שמש, ממטר אחה"צ'}, 'Orosí':{hi:24,lo:16,c:'partly',t:'ממטרים'},
+  'Puerto Viejo':{hi:29,lo:22,c:'rain',t:'לח וגשום'}
+};
+
+/* פעילויות לכל יום – מתוך קובץ התכנית. kind: alt=חלופה, opt=אופציה, free=זמן חופשי. g=מדריך */
+const PLAN = {
+  '2026-11-25': { title:'פואס והדרך ללה פורטונה', acts:[
+    { n:'Hacienda Alsacia', d:'עצירה לקפה ולנוף בחוות הקפה של Starbucks.' },
+    { n:'Poás Volcano National Park', d:'עלייה לתצפית על לוע הר הגעש.', tip:'אם ההר עטוף בעננים ואין ראות, לא להתעקש.', g:'לא נדרש' } ]},
+  '2026-11-26': { title:'Místico ומעיינות חמים', acts:[
+    { n:'Místico Arenal Hanging Bridges', d:'מסלול ביער הגשם בין גשרים תלויים.', g:'מומלץ. מדריך טבע עם טלסקופ משפר מאוד את הסיכוי לראות עצלנים, קופים, ציפורים ונחשים.' },
+    { n:'Tabacón Hot Springs', d:'אחר הצהריים והערב במעיינות החמים.' } ],
+    rule:'פעילות טבע בבוקר ומנוחה במעיינות אחר הצהריים. לא להוסיף פעילות שלישית.' },
+  '2026-11-27': { title:'ארנל 1968 וקפה־שוקולד', acts:[
+    { n:'Arenal 1968', d:'מסלול הליכה בשדות הלבה והיער למרגלות הר הגעש ארנל.', tip:'לבחור במסלול הבינוני ולא בארוך ביותר.', g:'לא נדרש' },
+    { n:'Don Juan Coffee & Chocolate Tour', d:'סיור מודרך על גידול ועיבוד קפה וקקאו, כולל טעימות.' } ]},
+  '2026-11-28': { title:'Peñas Blancas Safari Float', acts:[
+    { n:'Peñas Blancas Wildlife Safari Float', d:'שיט רגוע בנהר לצפייה בקופים, עצלנים, איגואנות וציפורים.', g:'מומלץ מאוד. איתור בעלי החיים הוא לב החוויה.' },
+    { n:'אחר הצהריים', d:'זמן חופשי ומנוחה.', kind:'free' } ]},
+  '2026-11-29': { title:'Río Celeste Tubing', acts:[
+    { n:'Río Celeste Tubing', d:'שיט אבובים בנהר הטורקיז. מהפעילויות הייחודיות ביותר באזור, לתת לה עדיפות.', g:'נדרש מפעיל' },
+    { n:'סיור לילה מודרך ב-Tenorio / Bijagua', d:'אם תנאי הנהר לא מתאימים.', kind:'alt' } ]},
+  '2026-11-30': { title:'פארק Tenorio – ריו סלסטה', acts:[
+    { n:'Tenorio National Park', d:'כניסה מוקדמת והליכה במסלול המלא: Catarata Río Celeste, Mirador, Laguna Azul, Borbollones ו-Teñidero. ב-Teñidero רואים איך נוצר הצבע הטורקיז של הנהר.', tip:'כ-3–4 שעות בקצב רגוע. אסור להיכנס למים בתוך הפארק.', g:'לא נדרש' } ]},
+  '2026-12-01': { title:'Rincón de la Vieja', g:'אפשרי ומוסיף ערך, לא חובה', acts:[
+    { n:'Las Pailas', d:'מסלול באזור הגיאותרמי: פומרולות, בריכות בוץ מבעבעות ותופעות געשיות נוספות.' },
+    { n:'Oropéndola Waterfall', d:'ביקור במפל.' },
+    { n:'Río Negro Hot Springs', d:'סיום היום במעיינות החמים ובבוץ הוולקני.' } ],
+    rule:'לא להוסיף באותו יום אומגות או פעילות אדרנלין.' },
+  '2026-12-02': { title:'הגעה למונטוורדה ויום קל', acts:[
+    { n:'Santa Elena', d:'היכרות ראשונית עם העיירה והאזור.' },
+    { n:'הליכה קצרה בטבע', d:'מסלול קל אחר הצהריים.' },
+    { n:'Night Walk', d:'סיור לילה מודרך ביער.', kind:'opt', tip:'רק אם לא נעשה כבר סיור לילה באזור Tenorio.' } ]},
+  '2026-12-03': { title:'יער העננים של מונטוורדה', acts:[
+    { n:'Monteverde Cloud Forest Preserve', d:'בוקר מוקדם ביער העננים. אחרי הסיור אפשר להמשיך למסלול קצר נוסף לבד.', g:'המלצה חזקה: Natural History Walk עם מדריך טבע.' },
+    { n:'Curi-Cancha Reserve', d:'עם מדריך, אם הדגש הוא איתור בעלי חיים וקצאלים.', kind:'alt' },
+    { n:'אחר הצהריים', d:'זמן חופשי, קפה ומנוחה.', kind:'free' } ],
+    rule:'לא לעשות את שתי השמורות באותו יום.' },
+  '2026-12-04': { title:'סנטה תרזה', acts:[
+    { n:'חוף ושקיעה', d:'אחר הצהריים.', kind:'free' } ],
+    rule:'יום מעבר ארוך. לא לתכנן פעילות נוספת, הערב נועד להורדת קצב.' },
+  '2026-12-05': { title:'Cabo Blanco, Cabuya ומונטזומה', g:'לא חובה', acts:[
+    { n:'Cabo Blanco Absolute Natural Reserve', d:'מסלול הליכה קצר יחסית בשמורה.', tip:'לבחור מסלול של כ-2 ק"מ ולא את הארוך.' },
+    { n:'Cabuya', d:'עצירה לארוחה או קפה.' },
+    { n:'Montezuma', d:'ביקור בעיירה.' },
+    { n:'Montezuma Waterfalls', d:'רק אם השביל במצב טוב ולא חלק מדי.', kind:'opt' } ]},
+  '2026-12-06': { title:'חופים ובריכות סלע', acts:[
+    { n:'Playa Hermosa / Mal País', d:'בבוקר סביב שעת השפל, לראות בריכות סלע טבעיות.' },
+    { n:'המשך היום', d:'ים, קפה, מסעדה, קריאה ושקיעה.', kind:'free' } ],
+    rule:'יום מנוחה מכוון. לא למלא אותו באטרקציות.' },
+  '2026-12-07': { title:'הגעה לדומיניקל', acts:[
+    { n:'חוף דומיניקל ושקיעה', d:'אחר הצהריים. אין צורך בפעילות נוספת.', kind:'free' } ]},
+  '2026-12-08': { title:'Corcovado National Park', g:'חובה, במסגרת סיור מאורגן', acts:[
+    { n:'Sirena Station', d:'יום מלא בפארק, אם יש יציאה נוחה וזמינות מתאימה.' },
+    { n:'San Pedrillo', d:'אם Sirena לא מתאים.', kind:'alt' } ],
+    rule:'מימי הטבע המרכזיים בטיול. לא מתכננים פעילות בערב.' },
+  '2026-12-09': { title:'Marino Ballena ו-Whale Tail', acts:[
+    { n:'Marino Ballena National Park', d:'ביקור בפארק והליכה אל Whale Tail.', tip:'לתזמן את הביקור סביב שעת השפל.', g:'לא נדרש' },
+    { n:'אחר הצהריים', d:'זמן חופשי באזור Uvita / Dominical.', kind:'free' },
+    { n:'שיט לווייתנים', d:'רק אם יש בזמן אמת דיווחים טובים על פעילות באזור.', kind:'opt' } ]},
+  '2026-12-10': { title:'Isla del Caño', acts:[
+    { n:'Isla del Caño Snorkeling Day Tour', d:'יום שיט ושנורקלינג, בדרך כלל שני סבבים.', tip:'שנורקלינג ולא צלילת מכלים, אלא אם מחליטים אחרת במקום.', g:'נדרש סיור מאורגן' } ]},
+  '2026-12-11': { title:'Eco Feria והרי אורוסי', acts:[
+    { n:'Eco Feria Dominical', d:'השוק המקומי של יום שישי.' },
+    { n:'עמק אורוסי', d:'אחר הצהריים באזור העמק.' },
+    { n:'Iglesia Colonial de Orosi', d:'הכנסייה הקולוניאלית והמוזיאון הסמוך.' },
+    { n:'Hacienda Orosi Hot Springs', d:'לערב. לא חובה, במיוחד אחרי Tabacón ו-Río Negro.', kind:'opt' } ]},
+  '2026-12-12': { title:'Tapantí והקריביים', g:'לא נדרש', acts:[
+    { n:'Tapantí National Park', d:'מסלול קצר של כשעתיים בפארק.' },
+    { n:'Lankester Botanical Garden', d:'אם יורד גשם חזק או שתנאי השבילים לא טובים.', kind:'alt' },
+    { n:'Punta Uva', d:'אחר הצהריים, חוף רגוע בלבד.', kind:'free' } ]},
+  '2026-12-13': { title:'Cahuita National Park', acts:[
+    { n:'Cahuita National Park', d:'מסלול לאורך יער גשם וחוף קריבי.', g:'מומלץ מאוד, כדי לראות עצלנים, קופים, בזיליסקים, נחשים וציפורים.' },
+    { n:'ארוחה ב-Cahuita', d:'אחרי המסלול.' },
+    { n:'Puerto Viejo / Playa Cocles', d:'אחר הצהריים.', kind:'free' } ],
+    rule:'שנורקלינג ב-Cahuita לא בתכנית, כי כבר יש יום שנורקלינג ב-Isla del Caño.' },
+  '2026-12-14': { title:'Bribri, קקאו ומפל', acts:[
+    { n:'Bribri Indigenous Experience', d:'חצי יום עם מארחים מהקהילה ב-Talamanca: מסורות מקומיות, צמחי מרפא, הכנת קקאו בשיטה מסורתית וביקור במפל.', g:'מומלץ, במסגרת סיור קהילתי מקומי' },
+    { n:'Punta Uva', d:'אחר הצהריים, חזרה ומנוחה.', kind:'free' },
+    { n:'קיאק חיות בר מודרך', d:'ב-Punta Uva, רק אם נשארו חשק ואנרגיה.', kind:'opt' } ]},
+  '2026-12-15': { title:'בוקר אחרון בקריביים וסן חוסה', acts:[
+    { n:'Punta Uva / Puerto Viejo', d:'זמן חופשי אחרון בבוקר.', kind:'free' },
+    { n:'Barrio Escalante', d:'ארוחת ערב ואווירה עירונית לערב האחרון בקוסטה ריקה.' } ]}
+};
+const KIND = { alt:'חלופה', opt:'אופציה', free:'זמן חופשי' };
+
+const SINAC = 'https://serviciosenlinea.sinac.go.cr';
+
+/* מידע מעשי לכל פעילות, לפי השם. q = חיפוש במפות. מקורות: אתרי מדריכים ו-Tico Times, נבדק באוקטובר 2026 */
+const INFO = {
+  'Hacienda Alsacia': { q:'Hacienda Alsacia Starbucks Coffee Farm, Alajuela' },
+  'Poás Volcano National Park': { q:'Poás Volcano National Park', book:SINAC, info:[
+    'כרטיס רק מראש באתר SINAC, עם שעת כניסה. כניסה אחרונה 14:00.',
+    'עד 20 דקות בתצפית על הלוע. קסדה חובה ומחולקת במקום.',
+    'אחרי ההתפרצות באוגוסט 2026 הוגבל מספר המבקרים. להזמין מוקדם ולבדוק סטטוס יום לפני.',
+    'קר בפסגה, כ-12–15 מעלות.' ]},
+  'Místico Arenal Hanging Bridges': { q:'Mistico Arenal Hanging Bridges Park' },
+  'Tabacón Hot Springs': { q:'Tabacón Thermal Resort & Spa', info:['כדאי להזמין כרטיס יומי מראש.'] },
+  'Arenal 1968': { q:'Arenal 1968 Volcano View and Lava Trails' },
+  'Don Juan Coffee & Chocolate Tour': { q:'Don Juan Coffee Tour, La Fortuna', info:['סיור בשעות קבועות, להזמין מראש.'] },
+  'Peñas Blancas Wildlife Safari Float': { q:'Peñas Blancas River Safari Float, La Fortuna', info:['נקודת המפגש תלויה במפעיל. לבדוק בהזמנה.'] },
+  'Río Celeste Tubing': { q:'Rio Celeste Tubing, Bijagua' },
+  'Tenorio National Park': { q:'Tenorio Volcano National Park, Rio Celeste entrance', book:SINAC, info:[
+    'כרטיס רק מראש באתר SINAC, בחלונות של 40 דקות. לא מוכרים כרטיסים בכניסה.',
+    'פתוח 8:00–16:00, כניסה אחרונה 13:45.',
+    'למפל יורדים 253 מדרגות. מאמצע 2025 הירידה לתצפית המפל סגורה חלקית.',
+    'החניה פרטית: 3,000 קולון במזומן. לא להשאיר חפצים ברכב.' ]},
+  'Las Pailas': { q:'Rincón de la Vieja National Park, Las Pailas Sector', book:SINAC, info:[
+    'פתוח שלישי–ראשון 8:00–15:00, סגור בשני. 1.12 הוא יום שלישי.',
+    'כרטיס רק מראש באתר SINAC. בשער Hacienda Guachipelín גובים אגרת מעבר קטנה במזומן (כ-800 קולון לאדם).',
+    'לולאת Las Pailas: כ-3.5 ק"מ, 60–90 דקות, שטוחה.',
+    'הר הגעש ברמת התראה 3 מאוגוסט 2026. לבדוק סטטוס יום לפני.' ]},
+  'Oropéndola Waterfall': { q:'Catarata Oropéndola, Rincón de la Vieja' },
+  'Río Negro Hot Springs': { q:'Río Negro Hot Springs, Hacienda Guachipelín', info:['בתוך Hacienda Guachipelín, ליד הדרך ל-Las Pailas. מומלץ להזמין מראש.'] },
+  'Santa Elena': { q:'Santa Elena, Monteverde' },
+  'Night Walk': { info:['כדאי להזמין מראש עם מדריך. לקחת פנס.'] },
+  'Monteverde Cloud Forest Preserve': { q:'Monteverde Cloud Forest Biological Reserve', info:[
+    'כרטיס נפרד לכל מסלול, מראש. עד 26 איש בכל חלון זמן.',
+    'פתוח 7:30–16:00. אוספים את הכרטיסים במרכז המבקרים, כק"מ וחצי לפני השמורה, ומשם יש הסעה.',
+    'מי שמאחר מפסיד את ההזמנה בלי החזר.' ]},
+  'Curi-Cancha Reserve': { q:'Curi-Cancha Reserve, Monteverde' },
+  'חוף ושקיעה': { q:'Playa Santa Teresa, Costa Rica' },
+  'Cabo Blanco Absolute Natural Reserve': { q:'Reserva Natural Absoluta Cabo Blanco', info:[
+    'פתוח רביעי–ראשון 8:00–16:00, סגור בשני ושלישי. 5.12 הוא שבת.',
+    'המסלול הקצר: שבילי Danés ו-Regreso, כ-1 ק"מ כל אחד. השביל לחוף ארוך הרבה יותר.',
+    'להביא מים ואוכל קל.' ]},
+  'Cabuya': { q:'Cabuya, Puntarenas' },
+  'Montezuma': { q:'Montezuma, Puntarenas' },
+  'Montezuma Waterfalls': { q:'Montezuma Waterfall trail' },
+  'Playa Hermosa / Mal País': { q:'Playa Hermosa, Santa Teresa, Costa Rica' },
+  'חוף דומיניקל ושקיעה': { q:'Playa Dominical' },
+  'Sirena Station': { q:'Sirena Ranger Station, Corcovado', info:[
+    'מדריך מוסמך הוא חובה בחוק. אי אפשר להיכנס לבד.',
+    'סיורים ל-Sirena יוצאים בדרך כלל בסירה מ-Sierpe או מ-Drake Bay, מוקדם בבוקר. לבדוק נקודת יציאה בהזמנה.',
+    'להזמין 2–4 שבועות מראש. פלסטיק חד-פעמי אסור בפארק.' ]},
+  'San Pedrillo': { q:'San Pedrillo Ranger Station, Corcovado', info:['סיורים יוצאים מחוף Uvita בסביבות 6:30–7:00, כשעה וחצי שיט לכל כיוון. נחיתה רטובה.'] },
+  'Marino Ballena National Park': { q:'Marino Ballena National Park, Uvita sector', info:[
+    'סקטור Uvita הכי קרוב לזנב, פתוח 7:00–18:00. אין צורך להזמין מראש.',
+    'תשלום בכניסה בכרטיס אשראי בלבד. החניה בדרך כלל במזומן.',
+    'הזנב נגיש כשעתיים לפני ואחרי השפל. כ-30 דקות הליכה לכל כיוון.',
+    'אין מים ואוכל בפנים.' ]},
+  'Isla del Caño Snorkeling Day Tour': { q:'Isla del Caño', info:['סיור מאורגן בלבד, להזמין מראש. לבדוק נקודת יציאה ושעה בהזמנה.'] },
+  'Eco Feria Dominical': { q:'Eco Feria Dominical', info:['שוק של יום שישי. לבדוק שעות בדף הפייסבוק של השוק.'] },
+  'עמק אורוסי': { q:'Orosi, Cartago' },
+  'Iglesia Colonial de Orosi': { q:'Iglesia de San José de Orosi' },
+  'Hacienda Orosi Hot Springs': { q:'Hacienda Orosi Hot Springs' },
+  'Tapantí National Park': { q:'Parque Nacional Tapantí Macizo de la Muerte', book:SINAC, info:[
+    'כרטיס מראש באתר SINAC. פתוח 8:00–16:00, כניסה אחרונה 15:00.',
+    'אין קליטה בפארק. לשמור את האישור בטלפון מראש.',
+    'שביל Oropéndola קל, כ-1.2 ק"מ. אסור לשחות בנהר.' ]},
+  'Lankester Botanical Garden': { q:'Jardín Botánico Lankester' },
+  'Punta Uva': { q:'Playa Punta Uva' },
+  'Cahuita National Park': { q:'Cahuita National Park, Kelly Creek entrance', info:[
+    'כניסת Kelly Creek במרכז Cahuita: בתרומה, במזומן. כניסת Puerto Vargas: בתשלום.',
+    'פתוח 8:00–16:00. השביל לאורך החוף 8.3 ק"מ, ורוב המבקרים הולכים חצי וחוזרים (3–4 שעות).',
+    'מדריכים מציעים סיור בכניסה.',
+    'יש חציית נחלים בגובה הברך. לא לשחות בלי מדריך בגלל זרמים.' ]},
+  'ארוחה ב-Cahuita': { q:'Cahuita, Limón' },
+  'Puerto Viejo / Playa Cocles': { q:'Playa Cocles' },
+  'Bribri Indigenous Experience': { info:['להזמין מראש דרך סיור קהילתי מקומי. לבדוק נקודת מפגש.'] },
+  'קיאק חיות בר מודרך': { q:'Punta Uva kayak tour' },
+  'Punta Uva / Puerto Viejo': { q:'Puerto Viejo de Talamanca' },
+  'Barrio Escalante': { q:'Barrio Escalante, San José' }
+};
+
+/* מה לקחת, נקודות בדרך ולוחות גאות לכל יום */
+const DAYX = {
+  '2026-11-24': { bring:['דרכון','שובר רכב מודפס','רישיון נהיגה בינלאומי'] },
+  '2026-11-25': { via:['Hacienda Alsacia Starbucks Coffee Farm, Alajuela','Poás Volcano National Park'], bring:['שכבות חמות','מעיל גשם','אישור SINAC בטלפון','דרכון'] },
+  '2026-11-26': { bring:['בגד ים ומגבת','נעלי הליכה','משקפת'] },
+  '2026-11-27': { bring:['נעלי הליכה','כובע','מים'] },
+  '2026-11-28': { bring:['קרם הגנה','כובע','משקפת'] },
+  '2026-11-29': { bring:['בגד ים','סנדלי מים סגורים','תיק יבש'] },
+  '2026-11-30': { via:['Tenorio Volcano National Park, Rio Celeste entrance'], bring:['נעליים עם אחיזה','מעיל גשם','מים ואוכל','מזומן לחניה','אישור SINAC'] },
+  '2026-12-01': { bring:['2 ליטר מים','אוכל','נעלי הליכה','בגד ים לבוץ','מזומן קולון','אישור SINAC'] },
+  '2026-12-02': { bring:['שכבות חמות','פנס לסיור לילה'] },
+  '2026-12-03': { bring:['שכבות','מעיל גשם','נעליים עם אחיזה','משקפת'] },
+  '2026-12-04': { bring:['בגד ים'], tip:'אפשר לנסוע מסביב או דרך מעבורת Puntarenas–Paquera. אם בוחרים במעבורת, לבדוק לוח זמנים ולהזמין.', link:{ t:'מעבורת Puntarenas–Paquera', u:'https://www.google.com/search?q=' + encodeURIComponent('Naviera Tambor Puntarenas Paquera horario') } },
+  '2026-12-05': { bring:['מים ואוכל קל','סנדלי שטח','קרם הגנה','בגד ים'] },
+  '2026-12-06': { bring:['בגד ים','נעלי מים לבריכות הסלע'], tide:'Mal Pais Costa Rica' },
+  '2026-12-07': { bring:['בגד ים'] },
+  '2026-12-08': { bring:['נעליים סגורות','סנדלים לנחיתה רטובה','מכנסיים ארוכים','דוחה יתושים','בקבוק רב-פעמי','תיק יבש'] },
+  '2026-12-09': { bring:['כרטיס אשראי לכניסה','מזומן לחניה','מים ואוכל','ציוד שנורקל'], tide:'Uvita Costa Rica' },
+  '2026-12-10': { bring:['בגד ים ומגבת','קרם הגנה ידידותי לשונית','כדור נגד בחילה, למי שנוטה'] },
+  '2026-12-11': { via:['Eco Feria Dominical'], bring:['מזומן לשוק'] },
+  '2026-12-12': { via:['Parque Nacional Tapantí Macizo de la Muerte'], bring:['מעיל גשם','נעליים סגורות','אישור SINAC שמור'] },
+  '2026-12-13': { bring:['סנדלים לחציית נחלים','מזומן לתרומה','דוחה יתושים','בגד ים'] },
+  '2026-12-14': { bring:['נעלי שטח','מזומן'] }
+};
+
+/* מה צריך להזמין מראש */
+const TOBOOK = [
+  { id:'esim', date:'2026-11-20', when:'לפני היציאה', t:'להתקין את ה-eSIM של פספורטכארד (25GB)', m:'מהקישור במייל מפספורטכארד מ-3.9', u:'https://passportcard.voyeglobal.com/my-account/' },
+  { id:'inscheck', date:'2026-11-20', when:'לפני היציאה', t:'לבדוק באישור הביטוח מ-14.10 כיסוי לאבובים, שנורקלינג ושיט', m:'הקובץ נפתח עם מספר ת"ז' },
+  { id:'delayout', date:'2026-11-23', when:'עד 6 שעות לפני ההמראה ב-24.11', t:'הרשמה לשירות עיכוב טיסה – הלוך', m:'פספורטכארד. בלי הרשמה אין כניסה לטרקלין' },
+  { id:'poas', date:'2026-11-25', t:'Poás – כרטיס כניסה', m:'רק באתר SINAC, עם שעת כניסה', u:SINAC },
+  { id:'mistico', date:'2026-11-26', t:'Místico – כרטיס ומדריך טבע' },
+  { id:'tabacon', date:'2026-11-26', t:'Tabacón – כרטיס יומי' },
+  { id:'donjuan', date:'2026-11-27', t:'Don Juan – סיור קפה ושוקולד' },
+  { id:'float', date:'2026-11-28', t:'Peñas Blancas Safari Float' },
+  { id:'tubing', date:'2026-11-29', t:'Río Celeste Tubing' },
+  { id:'tenorio', date:'2026-11-30', t:'Tenorio – כרטיס כניסה', m:'רק באתר SINAC, חלונות של 40 דקות', u:SINAC },
+  { id:'pailas', date:'2026-12-01', t:'Rincón de la Vieja (Las Pailas) – כרטיס', m:'באתר SINAC', u:SINAC },
+  { id:'rionegro', date:'2026-12-01', t:'Río Negro Hot Springs – כרטיס יומי' },
+  { id:'mvreserve', date:'2026-12-03', t:'Monteverde – כרטיס למסלול + Natural History Walk', m:'עד 26 איש בחלון זמן' },
+  { id:'corcovado', date:'2026-12-08', t:'Corcovado – סיור מאורגן', m:'2–4 שבועות מראש' },
+  { id:'cano', date:'2026-12-10', t:'Isla del Caño – סיור שנורקלינג' },
+  { id:'tapanti', date:'2026-12-12', t:'Tapantí – כרטיס כניסה', m:'באתר SINAC', u:SINAC },
+  { id:'bribri', date:'2026-12-14', t:'Bribri – חוויה קהילתית' },
+  { id:'delayback', date:'2026-12-16', when:'עד 6 שעות לפני ההמראה ב-16.12', t:'הרשמה לשירות עיכוב טיסה – חזור', m:'פספורטכארד' }
+];
+
+/* ביטוח נסיעות – מתוך מיילים של פספורטכארד */
+const INS = {
+  company:'פספורטכארד', type:'פוליסה שנתית', policy:'310993409', insured:'מנחם שועה', card:'מסתיים ב-0005',
+  since:'3.9.2026', maxDays:30,
+  whatsapp:'050-6708544', waUrl:'https://wa.me/972506708544', fromIsrael:'*9912', service:'+972-9-8920930'
+};
+
+/* ================= עזרים ================= */
+const $view = document.getElementById('view');
+const DAY = 86400000;
+const WD = ['ראשון','שני','שלישי','רביעי','חמישי','שישי','שבת'];
+const MON = ['ינואר','פברואר','מרץ','אפריל','מאי','יוני','יולי','אוגוסט','ספטמבר','אוקטובר','נובמבר','דצמבר'];
+const icon = (id, size=24, color='var(--accent)') => `<svg width="${size}" height="${size}" style="color:${color}" aria-hidden="true"><use href="#i-${id}"/></svg>`;
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const d0 = iso => { const [y,m,d] = iso.split('-').map(Number); return new Date(y, m-1, d); };
+const isoOf = dt => `${dt.getFullYear()}-${String(dt.getMonth()+1).padStart(2,'0')}-${String(dt.getDate()).padStart(2,'0')}`;
+const addDays = (iso, n) => { const t = d0(iso); t.setDate(t.getDate()+n); return isoOf(t); };
+const diffDays = (a, b) => Math.round((d0(b) - d0(a)) / DAY);
+const short = iso => { const t = d0(iso); return `${t.getDate()}.${t.getMonth()+1}`; };
+const longDate = iso => { const t = d0(iso); return `יום ${WD[t.getDay()]}, ${t.getDate()} ב${MON[t.getMonth()]}`; };
+const todayISO = () => isoOf(new Date());
+const nightsOf = h => diffDays(h.in, h.out);
+const mapsUrl = q => 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(q);
+const wazeUrl = q => 'https://waze.com/ul?navigate=yes&q=' + encodeURIComponent(q);
+const wxUrl = place => 'https://www.google.com/search?q=' + encodeURIComponent('weather ' + place + ' Costa Rica');
+const telHref = p => 'tel:' + p.replace(/[^+\d]/g,'');
+
+const TRIP_DAYS = diffDays(TRIP.start, TRIP.end) + 1;
+
+/* בונה את רשימת הימים מתוך הלינות */
+const DAYS = (() => {
+  const out = [];
+  for (let i = 0; i < TRIP_DAYS; i++) {
+    const date = addDays(TRIP.start, i);
+    const stay = HOTELS.find(h => h.in <= date && date < h.out) || null;
+    const left = HOTELS.find(h => h.out === date) || null;
+    const items = [];
+    let title, place, drive = null;
+    if (i === 0) {
+      title = 'טיסה ונחיתה בסן חוסה'; place = 'San José';
+      items.push({ic:'plane', t:'05:15 המראה מתל אביב, עצירה בפרנקפורט', m:'LH 691 → LH 518'});
+      items.push({ic:'plane', t:'19:15 נחיתה בסן חוסה (SJO)'});
+      items.push({ic:'car', t:'20:00 איסוף רכב Adobe בשדה', m:'שובר אופרן 45381058'});
+      drive = DRIVES['airport>sj1'];
+    } else if (date === TRIP.end) {
+      title = 'יום חזרה'; place = 'San José';
+      items.push({ic:'bed', t:`צ׳ק-אאוט מ-${left.name}`, m:left.checkout});
+      items.push({ic:'car', t:'15:00 החזרת רכב בשדה התעופה', m:'מיכל מלא'});
+      items.push({ic:'plane', t:'16:40 המראה לציריך', m:'LX 8037 → LX 252, נחיתה בתל אביב 17.12 ב-16:55'});
+      drive = DRIVES['sj2>airport'];
+    } else if (left && stay && left.id !== stay.id) {
+      title = `${left.area.split(' (')[0]} ← ${stay.area.split(' (')[0]}`; place = stay.place;
+      drive = DRIVES[`${left.id}>${stay.id}`] || null;
+      items.push({ic:'bed', t:`צ׳ק-אאוט מ-${left.name}`, m:left.checkout});
+      items.push({ic:'car', t:`נסיעה ל${stay.area.split(' (')[0]}`, m:drive ? drive + ' (משוער)' : ''});
+      items.push({ic:'bed', t:`צ׳ק-אין ב-${stay.name}`, m:stay.checkin});
+    } else {
+      title = stay.area.split(' (')[0]; place = stay.place;
+    }
+    const hq = h => `${h.name}, ${h.place}, Costa Rica`;
+    const AIRPORT = 'Juan Santamaría International Airport';
+    let route = null;
+    if (i === 0) route = { o:AIRPORT, d:hq(stay) };
+    else if (date === TRIP.end) route = { o:hq(left), d:AIRPORT };
+    else if (left && stay && left.id !== stay.id) route = { o:hq(left), d:hq(stay) };
+    const plan = PLAN[date] || null;
+    if (plan && plan.title) title = plan.title;
+    const tip = (stay && stay.tip && stay.in === date) ? stay.tip : '';
+    out.push({ n:i+1, date, title, place, stay, items, tip, plan, route, x: DAYX[date] || {} });
+  }
+  return out;
+})();
+const dayOf = iso => DAYS.find(d => d.date === iso) || null;
+
+function bandHeader(title, sub, backTo){
+  return `<header class="band gut">
+    ${backTo ? `<a class="back" href="#${backTo}">${icon('back',22)}חזרה</a>` : ''}
+    <h1>${title}</h1>${sub ? `<p class="sub">${sub}</p>` : ''}
+  </header>`;
+}
+
+/* ================= בית ================= */
+function wxTile(iso, label, isNow){
+  const d = dayOf(iso);
+  if (!d) return '';
+  const c = CLIMATE[d.place] || {hi:'–',lo:'–',c:'cloud',t:''};
+  const col = c.c === 'rain' ? 'var(--rain)' : 'var(--accent)';
+  return `<a class="wx-tile ${isNow ? 'now' : ''}" href="${wxUrl(d.place)}" target="_blank" rel="noopener" aria-label="${label}: ${esc(d.place)}, ${c.hi} עד ${c.lo} מעלות, ${c.t}. פתיחת תחזית חיה">
+    <span class="wx-day">${label}</span>
+    ${icon(c.c, 34, col)}
+    <span class="wx-t">${c.hi}°<small> / ${c.lo}°</small></span>
+    <span class="wx-place">${esc(d.place)}</span>
+    <span class="wx-c">${c.t}</span>
+  </a>`;
+}
+
+/* תחזית אמיתית – נכתבת כל בוקר ע"י משימה מתוזמנת למסמך weather/current */
+let WX = null;
+const num = v => { const n = Number(v); return Number.isFinite(n) ? Math.round(n) : '–'; };
+const accIc = n => { n = Number(n); return (n<=2||n===33||n===34) ? 'sun' : (n<=5||(n>=35&&n<=37)) ? 'partly' : (n<=11||n===38) ? 'cloud' : 'rain'; };
+const fcOf = iso => (WX && Array.isArray(WX.days)) ? (WX.days.find(x => x && x.date === iso) || null) : null;
+const updatedLabel = () => { if (!WX || !WX.updatedAt) return ''; const m = String(WX.updatedAt).match(/T(\d\d:\d\d)/); const dm = String(WX.updatedAt).match(/^\d{4}-(\d\d)-(\d\d)/); return m ? `${dm ? Number(dm[2]) + '.' + Number(dm[1]) + ' ' : ''}${m[1]}` : ''; };
+
+function wxCompact(iso, label){
+  const d = dayOf(iso); if (!d) return '';
+  const f = fcOf(iso);
+  if (!f) return wxTile(iso, label, false).replace('<span class="wx-c">', '<span class="wx-tag">ממוצע</span><span class="wx-c">');
+  const ic = f.ic || accIc(f.icon), col = ic === 'rain' ? 'var(--rain)' : 'var(--accent)';
+  return `<a class="wx-tile" href="${wxUrl(d.place)}" target="_blank" rel="noopener" aria-label="${label}: ${esc(d.place)}, ${num(f.hi)} עד ${num(f.lo)} מעלות, ${num(f.rain)}% גשם">
+    <span class="wx-day">${label}</span>
+    ${icon(ic, 34, col)}
+    <span class="wx-t">${num(f.hi)}°<small> / ${num(f.lo)}°</small></span>
+    <span class="wx-place">${esc(d.place)}</span>
+    <span class="wx-c" style="color:var(--rain)">${num(f.rain)}% גשם</span>
+    <span class="wx-c">${esc(f.phrase || '')}</span>
+  </a>`;
+}
+
+function wxToday(iso){
+  const f = fcOf(iso), d = dayOf(iso);
+  if (!f || !d) return '';
+  const ic = f.ic || accIc(f.icon), col = ic === 'rain' ? 'var(--rain)' : 'var(--accent)';
+  const hrs = Array.isArray(f.hours) ? f.hours.slice(0, 14) : [];
+  return `<div class="wx-today">
+    <div class="wt-top">
+      <div>
+        <span class="wx-day">היום · ${esc(d.place)}</span>
+        <span class="wt-big">${num(f.hi)}°<small> / ${num(f.lo)}°</small></span>
+        <span class="wt-ph">${esc(f.phrase || '')}</span>
+      </div>
+      ${icon(ic, 56, col)}
+    </div>
+    <div class="wt-meta">
+      <span>סיכוי לגשם <b>${num(f.rain)}%</b></span>
+      ${f.rainMm != null ? `<span>כמות <b>${esc(f.rainMm)} מ"מ</b></span>` : ''}
+      ${f.sunset ? `<span>שקיעה <b>${esc(f.sunset)}</b></span>` : ''}
+    </div>
+    ${hrs.length ? `<div class="hours" role="list" aria-label="תחזית לפי שעות">${hrs.map(h => {
+      const hi = h.ic || accIc(h.icon);
+      return `<div class="hr" role="listitem"><span class="ht">${esc(h.time || '')}</span>${icon(hi, 24, hi === 'rain' ? 'var(--rain)' : 'var(--accent)')}<span class="hv">${num(h.t)}°</span><span class="hp">${num(h.rain)}%</span></div>`;
+    }).join('')}</div>` : ''}
+  </div>`;
+}
+
+/* תחזית חיה מ-Open-Meteo, נשמרת בטלפון לשימוש בלי קליטה */
+const COORDS = {
+  'San José':[9.933,-84.083], 'La Fortuna':[10.470,-84.650], 'Bijagua':[10.730,-85.060], 'Curubandé':[10.730,-85.410],
+  'Monteverde':[10.300,-84.820], 'Santa Teresa':[9.645,-85.168], 'Dominical':[9.253,-83.862], 'Orosí':[9.800,-83.850], 'Puerto Viejo':[9.645,-82.705]
+};
+const WMO = c => {
+  c = Number(c);
+  if (c <= 1) return ['sun', c === 0 ? 'בהיר' : 'בהיר בעיקר'];
+  if (c === 2) return ['partly', 'מעונן חלקית'];
+  if (c === 3) return ['cloud', 'מעונן'];
+  if (c === 45 || c === 48) return ['cloud', 'ערפל'];
+  if (c >= 51 && c <= 57) return ['rain', 'טפטוף'];
+  if (c >= 61 && c <= 67) return ['rain', 'גשם'];
+  if (c >= 80 && c <= 82) return ['rain', 'ממטרים'];
+  if (c >= 95) return ['rain', 'סופות רעמים'];
+  return ['cloud', ''];
+};
+const WX_KEY = 'cr-weather-v1';
+try { const c = JSON.parse(localStorage.getItem(WX_KEY) || 'null'); if (c && Array.isArray(c.days)) WX = c; } catch (e) {}
+
+async function loadWeather(){
+  const today = todayISO();
+  if (today > TRIP.end) return;
+  const base = today < TRIP.start ? TRIP.start : today;
+  if (diffDays(today, base) > 13) return;            // תחזית זמינה רק כשבועיים קדימה
+  const dates = [0,1,2].map(i => addDays(base, i)).filter(d => dayOf(d));
+  const places = [...new Set(dates.map(d => dayOf(d).place))].filter(p => COORDS[p]);
+  const res = {};
+  await Promise.all(places.map(async p => {
+    const [la, lo] = COORDS[p];
+    const u = `https://api.open-meteo.com/v1/forecast?latitude=${la}&longitude=${lo}&timezone=America%2FCosta_Rica&forecast_days=16`
+      + '&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,precipitation_sum,sunset'
+      + '&hourly=temperature_2m,precipitation_probability,weather_code,is_day';
+    const r = await fetch(u);
+    if (!r.ok) throw new Error('weather ' + r.status);
+    res[p] = await r.json();
+  }));
+  const days = [];
+  dates.forEach((date, i) => {
+    const p = dayOf(date).place, j = res[p]; if (!j) return;
+    const k = j.daily.time.indexOf(date); if (k < 0) return;
+    const [ic, ph] = WMO(j.daily.weather_code[k]);
+    const day = { date, place:p, hi:j.daily.temperature_2m_max[k], lo:j.daily.temperature_2m_min[k], ic, phrase:ph,
+      rain:j.daily.precipitation_probability_max[k], rainMm:Math.round((j.daily.precipitation_sum[k] || 0) * 10) / 10 };
+    if (i === 0) {
+      day.sunset = String(j.daily.sunset[k] || '').slice(11, 16);
+      day.hours = [];
+      j.hourly.time.forEach((t, h) => {
+        if (t.slice(0, 10) === date && j.hourly.is_day[h] === 1) {
+          const [hic] = WMO(j.hourly.weather_code[h]);
+          day.hours.push({ time:t.slice(11, 16), t:j.hourly.temperature_2m[h], ic:hic, rain:j.hourly.precipitation_probability[h] });
+        }
+      });
+    }
+    days.push(day);
+  });
+  if (!days.length) return;
+  const now = new Date();
+  WX = { updatedAt: `${isoOf(now)}T${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`, days };
+  try { localStorage.setItem(WX_KEY, JSON.stringify(WX)); } catch (e) {}
+  const key = (location.hash || '#home').slice(1);
+  if (key === 'home' || !ROUTES[key]) render(true);
+}
+setTimeout(() => loadWeather().catch(() => {}), 0);
+document.addEventListener('visibilitychange', () => { if (!document.hidden) loadWeather().catch(() => {}); });
+
+function home(){
+  const today = todayISO();
+  const before = today < TRIP.start, after = today > TRIP.end;
+  let big, cap;
+  if (before) { big = diffDays(today, TRIP.start); cap = big === 1 ? 'יום אחד לטיסה' : 'ימים לטיסה'; }
+  else if (!after) { big = diffDays(today, TRIP.end); cap = big === 0 ? 'היום חוזרים הביתה' : (big === 1 ? 'יום אחד לסיום הטיול' : 'ימים לסיום הטיול'); }
+  else { big = '✓'; cap = 'הטיול הסתיים'; }
+
+  // קוביות מזג אוויר: היום + יומיים, לפי המיקום בתכנית. לפני הטיול – שלושת הימים הראשונים.
+  const base = before ? TRIP.start : today;
+  const labels = before ? ['24.11','25.11','26.11'] : ['היום','מחר','מחרתיים'];
+  let wxBlock = '';
+  if (before) {
+    wxBlock = `<div class="wx">${[0,1,2].map(i => wxCompact(addDays(base,i), short(addDays(base,i)))).join('')}</div>
+      <p class="note-sm">${fcOf(base) ? `תחזית Open-Meteo · עודכן ${updatedLabel()}` : 'ממוצעים לעונה. תחזית אמיתית תופיע כשבועיים לפני הטיסה.'}</p>`;
+  } else if (!after) {
+    const t = wxToday(today);
+    const live = !!fcOf(today);
+    wxBlock = (t || `<div class="wx" style="grid-template-columns:1fr">${wxTile(today, labels[0], true)}</div>`)
+      + `<div class="wx two">${wxCompact(addDays(today,1), labels[1])}${wxCompact(addDays(today,2), labels[2])}</div>`
+      + `<p class="note-sm">${live ? `תחזית Open-Meteo · עודכן ${updatedLabel()}` : 'התחזית של היום עוד לא עודכנה. מוצגים ממוצעים לעונה.'} לחיצה על קובייה פותחת תחזית חיה.</p>`;
+  }
+
+  // סיכום היום
+  let summary;
+  const d = dayOf(today);
+  if (d) {
+    summary = `<div class="summary">
+      <span class="label">יום ${d.n} מתוך ${TRIP_DAYS}</span>
+      <span class="loc">${esc(d.title)}</span>
+      <ul>${d.items.map(x => `<li>${icon(x.ic,20,'var(--muted)')}<span>${esc(x.t)}${x.m ? `<br><span style="color:var(--muted);font-size:15px">${esc(x.m)}</span>` : ''}</span></li>`).join('')}${
+        d.plan ? d.plan.acts.filter(a => a.kind !== 'alt').map(a => `<li>${icon('dot',20, a.kind ? 'var(--muted)' : 'var(--accent)')}<span><b>${esc(a.n)}</b>${a.kind ? ` <span style="color:var(--muted);font-size:15px">· ${KIND[a.kind]}</span>` : ''}</span></li>`).join('') : ''}</ul>
+      ${d.plan && d.plan.rule ? `<p class="tip" style="margin:0">${esc(d.plan.rule)}</p>` : ''}
+      ${d.stay ? `<span style="font-size:16px;color:var(--fg-2)">לינה הלילה: <b>${esc(d.stay.name)}</b></span>` : ''}
+      <a class="linkbtn" href="#journey">${icon('map',20)}לפרטי היום במסע</a>
+    </div>`;
+  } else if (before) {
+    const first = DAYS[0];
+    summary = `<div class="summary">
+      <span class="label">היום</span>
+      <span class="loc">עוד לא יצאנו</span>
+      <ul>
+        <li>${icon('plane',20)}<span>הטיסה הבאה: ${FLIGHTS.legs[0].label} ב-05:15 מנתב"ג<br><span style="color:var(--muted);font-size:15px">כדאי להגיע לשדה 3 שעות לפני</span></span></li>
+        <li>${icon('bed',20)}<span>לילה ראשון: ${esc(first.stay.name)}, ${esc(first.stay.area)}</span></li>
+        <li>${icon('car',20)}<span>איסוף רכב בשדה ב-20:00</span></li>
+      </ul>
+      <a class="linkbtn" href="#flights">${icon('plane',20)}לפרטי הטיסה</a>
+    </div>`;
+  } else {
+    summary = `<div class="summary"><span class="loc">ברוכים השבים</span><p class="sub">הטיול הסתיים ב-${short(TRIP.end)}.</p></div>`;
+  }
+
+  return `<header class="band gut">
+      <p class="today-date">${longDate(today)}</p>
+      <h1>קוסטה ריקה</h1>
+      <div class="count"><b>${big}</b><span>${cap}</span></div>
+    </header>
+    <main class="gut">
+      ${wxBlock ? `<section class="blk">
+        <p class="label">${before ? 'מזג אוויר בימים הראשונים' : 'מזג אוויר לפי המסלול'}</p>
+        ${wxBlock}
+      </section>` : ''}
+      <section class="blk">
+        <p class="label">מה עושים היום</p>
+        ${summary}
+      </section>
+    </main>`;
+}
+
+/* ================= מסע ================= */
+const dirUrl = (o, d, via) => 'https://www.google.com/maps/dir/?api=1&travelmode=driving&origin=' + encodeURIComponent(o) + '&destination=' + encodeURIComponent(d) + (via && via.length ? '&waypoints=' + encodeURIComponent(via.join('|')) : '');
+const tideUrl = p => 'https://www.google.com/search?q=' + encodeURIComponent('tide times ' + p);
+const lk = (href, label, ic) => `<a class="lk" href="${href}" target="_blank" rel="noopener">${ic ? icon(ic,18) : ''}${label}</a>`;
+
+function routeHTML(d){
+  const x = d.x || {};
+  const parts = [];
+  if (d.route) {
+    parts.push(lk(dirUrl(d.route.o, d.route.d, x.via), 'מסלול הנסיעה', 'map'));
+    parts.push(lk(wazeUrl(d.route.d), 'Waze ליעד', 'pin'));
+  }
+  if (x.tide) parts.push(lk(tideUrl(x.tide), 'טבלת גאות ושפל', 'clock'));
+  if (x.link) parts.push(lk(x.link.u, esc(x.link.t)));
+  return parts.length ? `<div class="links">${parts.join('')}</div>` : '';
+}
+
+function extraHTML(d){
+  const x = d.x || {};
+  return `${x.tip ? `<p class="tip">${esc(x.tip)}</p>` : ''}
+    ${x.bring && x.bring.length ? `<div class="bringwrap"><span class="label">מה לקחת</span><div class="bring">${x.bring.map(b => `<span>${esc(b)}</span>`).join('')}</div></div>` : ''}`;
+}
+
+function actsHTML(p){
+  if (!p) return '';
+  return `<ul class="acts">${p.acts.map(a => {
+      const inf = INFO[a.n] || {};
+      const links = [];
+      if (inf.q) { links.push(lk(mapsUrl(inf.q), 'מפה', 'pin')); links.push(lk(wazeUrl(inf.q), 'Waze')); }
+      if (inf.book) links.push(lk(inf.book, 'כרטיסים ב-SINAC', 'ticket'));
+      return `<li class="act ${a.kind || ''}">
+      <div class="an"><b>${esc(a.n)}</b>${a.kind ? `<span class="kchip">${KIND[a.kind]}</span>` : ''}</div>
+      <p>${esc(a.d)}</p>
+      ${a.tip ? `<p class="atip"><b>טיפ:</b> ${esc(a.tip)}</p>` : ''}
+      ${a.g ? `<p class="ag">מדריך: ${esc(a.g)}</p>` : ''}
+      ${inf.info ? `<ul class="info">${inf.info.map(s => `<li>${esc(s)}</li>`).join('')}</ul>` : ''}
+      ${links.length ? `<div class="links">${links.join('')}</div>` : ''}
+    </li>`; }).join('')}</ul>
+    ${p.g ? `<p class="ag">מדריך: ${esc(p.g)}</p>` : ''}
+    ${p.rule ? `<p class="tip"><b>עיקרון היום:</b> ${esc(p.rule)}</p>` : ''}`;
+}
+function journey(){
+  const today = todayISO();
+  const picks = DAYS.map(d => `<button type="button" data-goto="day-${d.n}" class="${d.date===today?'today':''}" aria-label="יום ${d.n}, ${short(d.date)}"><small>${short(d.date)}</small><b>${d.n}</b></button>`).join('');
+  const cards = DAYS.map(d => `
+    <article class="day ${d.date===today?'today':''}" id="day-${d.n}">
+      <div class="dh"><span class="dn">יום ${d.n}</span><span class="dd">${longDate(d.date)}</span></div>
+      <h3>${esc(d.title)}</h3>
+      ${d.items.length ? `<ul class="tl log">${d.items.map(x => `<li>${icon(x.ic,20, 'var(--muted)')}<span>${esc(x.t)}${x.m ? `<br><span class="m">${esc(x.m)}</span>` : ''}</span></li>`).join('')}</ul>` : ''}
+      ${routeHTML(d)}
+      ${actsHTML(d.plan)}
+      ${extraHTML(d)}
+      ${d.tip ? `<p class="tip">${esc(d.tip)}</p>` : ''}
+      ${d.stay ? `<span style="font-size:16px;color:var(--muted)">לינה: <span style="color:var(--fg)">${esc(d.stay.name)}</span></span>` : ''}
+    </article>`).join('');
+  return `<header class="band gut">
+      <h1>המסע</h1>
+      <p class="sub">${TRIP_DAYS} ימים · ${HOTELS.length} מקומות לינה · ${short(TRIP.start)}–${short(TRIP.end)}</p>
+      <nav class="daypick" aria-label="קפיצה ליום">${picks}</nav>
+    </header>
+    <main class="gut">${cards}</main>`;
+}
+
+/* ================= הזמנות ================= */
+function bookings(){
+  const today = todayISO();
+  const nextHotel = HOTELS.find(h => h.out > today) || HOTELS[HOTELS.length-1];
+  const nextLeg = FLIGHTS.legs.find(l => l.date >= today) || FLIGHTS.legs[1];
+  const tile = (href, ic, t, s) => `<a class="tile" href="#${href}"><span class="ic">${icon(ic,30)}</span><span class="tx"><span class="tt">${t}</span><span class="ts">${s}</span></span><span class="ch">${icon('back',22,'var(--muted)')}</span></a>`;
+  return bandHeader('הזמנות', 'כל אישורי ההזמנה במקום אחד') + `<main class="gut"><div class="tiles">
+    ${tile('flights','plane','טיסות', `${nextLeg.dir}: ${nextLeg.label} · קוד ${FLIGHTS.bookingCode}`)}
+    ${tile('car','car','רכב', `${CAR.model.split(' או')[0]} · ${CAR.days} ימים · איסוף ${short(TRIP.start)}`)}
+    ${tile('hotels','bed','מלונות', `${HOTELS.length} מקומות · הבא: ${nextHotel.name}`)}
+    ${tile('insurance','shield','ביטוח נסיעות', `${INS.company} · פוליסה ${INS.policy}`)}
+    ${tile('tobook','ticket','להזמין מראש', `${TOBOOK.filter(b => !doneSet().has(b.id)).length} מתוך ${TOBOOK.length} עוד פתוחים`)}
+  </div></main>`;
+}
+
+function insurance(){
+  const i = INS;
+  return bandHeader('ביטוח נסיעות', `${i.company} · ${i.type}`, 'bookings') + `<main class="gut">
+    <section class="card hl">
+      <span class="chip">בתוקף בזמן הטיול</span>
+      <div class="kv">
+        <div><span>מספר פוליסה</span><strong class="code">${i.policy}</strong></div>
+        <div><span>מבוטח</span><strong>${i.insured}</strong></div>
+        <div><span>כרטיס PassportCard</span><strong>${i.card}</strong></div>
+        <div><span>נרכשה</span><strong>${i.since}</strong></div>
+      </div>
+      <p class="tip">הפוליסה מכסה עד ${i.maxDays} ימים רצופים בכל נסיעה. הטיול הוא ${diffDays(TRIP.start, '2026-12-17') + 1} ימים, בתוך המגבלה.</p>
+      <button class="btn out" type="button" data-copy="${i.policy}">${icon('copy',20)}העתק מספר פוליסה</button>
+    </section>
+    <section class="card">
+      <h2>במקרה רפואי</h2>
+      <p style="margin:0;font-size:17px;color:var(--fg-2)">לפנות קודם למוקד, 24 שעות ביממה. במקרה חירום מסכן חיים מתקשרים קודם ל-911.</p>
+      <a class="btn" href="${i.waUrl}" target="_blank" rel="noopener">וואטסאפ למוקד · ${i.whatsapp}</a>
+      <div class="kv">
+        <div><span>חירום בקוסטה ריקה</span><strong>911</strong></div>
+        <div><span>שיחה מישראל</span><strong>${i.fromIsrael}</strong></div>
+        <div style="grid-column:1/-1"><span>שירות לקוחות</span><strong><a href="tel:+97298920930">${i.service}</a></strong></div>
+      </div>
+      <p class="note-sm">כדאי לשמור את מספר הוואטסאפ באנשי הקשר לפני היציאה.</p>
+    </section>
+    <section class="card">
+      <h2>שירותים נוספים בפוליסה</h2>
+      <ul class="bullets">
+        <li><b>עיכוב טיסה:</b> עיכוב של יותר מ-90 דקות מזכה בכניסה לטרקלין, רק בהרשמה מראש עד 6 שעות לפני כל טיסה.</li>
+        <li><b>eSIM:</b> חבילת גלישה של 25GB לשנה, בלי עלות.</li>
+        <li><b>כיסוי לטלפון נייד.</b></li>
+        <li><b>אפליקציית "חדר המצב":</b> התרעות בזמן אמת לפי מיקום.</li>
+        <li>אפשר להוסיף את כרטיס PassportCard ל-Apple Pay או ל-Google Pay.</li>
+      </ul>
+      <a class="linkbtn" href="#tobook">${icon('ticket',20)}לרשימת ההרשמות לפני הטיסה</a>
+    </section>
+    <p class="note-sm">מסמכי הפוליסה נשלחו במייל ב-3.9 וב-14.10. הקבצים נפתחים עם מספר ת"ז.</p>
+  </main>`;
+}
+
+/* רשימת הזמנות מראש – הסימון נשמר בדפדפן של הצופה בלבד */
+const DONE_KEY = 'cr-tobook-done';
+function doneSet(){ try { return new Set(JSON.parse(localStorage.getItem(DONE_KEY) || '[]')); } catch (e) { return new Set(); } }
+function saveDone(s){ try { localStorage.setItem(DONE_KEY, JSON.stringify([...s])); } catch (e) {} }
+
+function tobook(){
+  const done = doneSet();
+  const rows = TOBOOK.map(b => `<div class="ck ${done.has(b.id)?'done':''}">
+      <input type="checkbox" id="bk-${b.id}" data-book="${b.id}" ${done.has(b.id)?'checked':''}>
+      <label for="bk-${b.id}">
+        <span class="cd">${b.when || (short(b.date) + ' · יום ' + (diffDays(TRIP.start, b.date) + 1))}</span>
+        <span class="ct">${esc(b.t)}</span>
+        ${b.m ? `<span class="cm">${esc(b.m)}</span>` : ''}
+      </label>
+      ${b.u ? `<a class="lk" href="${b.u}" target="_blank" rel="noopener">SINAC</a>` : ''}
+    </div>`).join('');
+  return bandHeader('להזמין מראש', 'כרטיסים וסיורים שדורשים הזמנה. סמן מה כבר הוזמן.', 'bookings') + `<main class="gut">
+    <p class="tip">באתר SINAC פותחים חשבון, בוחרים "Online Reservation", את הפארק, התאריך והשעה, ומזינים מספר דרכון. את אישור ההזמנה כדאי לשמור בטלפון, כי באחדים מהפארקים אין קליטה.</p>
+    <div class="check">${rows}</div>
+    <p class="note-sm">הסימון נשמר רק בטלפון הזה.</p>
+  </main>`;
+}
+
+function segHTML(s){
+  if (s.layover) return `<div class="lay">${icon('clock',20,'var(--muted)')}<span>עצירה ב${s.layover} · <b>${s.dur}</b></span></div>`;
+  const end = p => `<div class="end">
+      <span class="tm">${p.time}${p.plus ? `<small style="font-size:15px;color:var(--muted)"> ${p.plus}</small>` : ''}</span>
+      ${p.old ? `<span class="old">היה ${p.old}</span>` : ''}
+      <span class="ap">${p.code}</span>
+      <span class="ci">${p.city}${p.term ? ' · ' + p.term : ''}</span>
+    </div>`;
+  return `<div class="seg">
+    <div class="ends">${end(s.from)}
+      <svg width="28" height="28" viewBox="0 0 24 24" role="img" aria-label="אל" style="color:var(--accent);flex-shrink:0"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M19 12H5m7 7-7-7 7-7"/></svg>
+      ${end(s.to)}</div>
+    <div class="meta"><span><b>${s.flight}</b> · ${s.op}</span><span>${s.plane}</span><span>מושב: ${s.seat}</span></div>
+  </div>`;
+}
+
+function flights(){
+  const f = FLIGHTS;
+  const legs = f.legs.map((l,i) => `
+    <section class="card ${i===0?'hl':''}">
+      <div class="head"><span class="chip ${i===0?'':'ghost'}">${l.dir}</span><span class="d">${l.label} · ${l.total}</span></div>
+      ${l.segments.map(segHTML).join('')}
+    </section>`).join('');
+  return bandHeader('טיסות', `${f.airline} · ${f.fare}`, 'bookings') + `<main class="gut">
+    ${f.scheduleChanged ? `<div class="notice" role="note">${icon('alert',22)}<span>SWISS שינו את שעות הטיסות LH 518 ו-LX 252. השעות כאן הן החדשות. כדאי לוודא באתר SWISS שהשינוי אושר.</span></div>` : ''}
+    ${legs}
+    <section class="card">
+      <h2>פרטי הזמנה</h2>
+      <div class="kv">
+        <div><span>קוד הזמנה</span><strong class="code">${f.bookingCode}</strong></div>
+        <div><span>מספר כרטיס</span><strong class="code" style="font-size:16px">${f.ticket}</strong></div>
+        <div><span>נוסע</span><strong>${f.passenger}</strong></div>
+        <div><span>כבודה</span><strong style="font-size:16px">${f.baggage}</strong></div>
+      </div>
+      <div class="btns">
+        <button class="btn" type="button" data-copy="${f.bookingCode}">${icon('copy',20,'var(--on-accent)')}העתק קוד</button>
+        <a class="btn out" href="${f.manageUrl}" target="_blank" rel="noopener">ניהול הזמנה</a>
+      </div>
+      <p class="note-sm">צ׳ק-אין נפתח 23 שעות לפני ההמראה.</p>
+    </section>
+  </main>`;
+}
+
+function car(){
+  const c = CAR;
+  const where = (lbl, p, hl) => `<section class="card ${hl?'hl':''}">
+      <span class="chip ${hl?'':'ghost'}">${lbl}</span>
+      <span style="font-size:24px;font-weight:800">${p.when}</span>
+      <span style="font-size:18px;color:var(--fg-2)">${p.place}</span>
+      <span class="note-sm">שעות פעילות הסניף: ${p.hours}</span>
+      <a class="btn ${hl?'':'out'}" href="${mapsUrl('Adobe Rent a Car Juan Santamaria Airport')}" target="_blank" rel="noopener">${icon('pin',20, hl ? 'var(--on-accent)' : 'var(--accent)')}ניווט לסניף</a>
+    </section>`;
+  return bandHeader('רכב', `${c.supplier} · ${c.model}`, 'bookings') + `<main class="gut">
+    ${where('איסוף', c.pickup, true)}
+    ${where('החזרה', c.dropoff, false)}
+    <section class="card">
+      <h2>פרטי ההזמנה</h2>
+      <div class="kv">
+        <div><span>מספר הזמנה (אופרן)</span><strong class="code">${c.ref}</strong></div>
+        <div><span>משך</span><strong>${c.days} ימים</strong></div>
+        <div><span>רכב</span><strong style="font-size:16px">${c.specs}</strong></div>
+        <div><span>נהג</span><strong>${c.driver}</strong></div>
+        <div><span>השתתפות עצמית</span><strong>${c.deductible}</strong></div>
+        <div><span>פיקדון באשראי</span><strong>${c.deposit}</strong></div>
+        <div><span>דלק</span><strong>${c.fuel}</strong></div>
+        <div><span>טיסה בשובר</span><strong>${c.flightNo}</strong></div>
+      </div>
+      <button class="btn out" type="button" data-copy="${c.ref}">${icon('copy',20)}העתק מספר הזמנה</button>
+    </section>
+    <section class="card">
+      <h2>מה להביא לאיסוף</h2>
+      <ul class="bullets">${c.bring.map(x => `<li>${x}</li>`).join('')}</ul>
+    </section>
+    <section class="card">
+      <h2>כלול במחיר</h2>
+      <ul class="bullets">${c.included.map(x => `<li>${x}</li>`).join('')}</ul>
+      ${c.notes.map(n => `<p class="tip">${n}</p>`).join('')}
+    </section>
+    <section class="card">
+      <h2>אופרן – שירות לקוחות</h2>
+      <div class="kv">
+        <div><span>טלפון</span><strong><a href="${telHref('+97237951010')}">${c.phone}</a></strong></div>
+        <div><span>וואטסאפ</span><strong><a href="https://wa.me/972547952020" target="_blank" rel="noopener">${c.whatsapp}</a></strong></div>
+        <div style="grid-column:1/-1"><span>דוא"ל</span><strong>${c.email}</strong></div>
+      </div>
+    </section>
+  </main>`;
+}
+
+function hotels(){
+  const today = todayISO();
+  const next = HOTELS.find(h => h.out > today);
+  const items = HOTELS.map(h => {
+    const isNext = next && h.id === next.id;
+    const n = nightsOf(h);
+    return `<details class="hotel ${isNext?'next':''}" ${isNext?'open':''}>
+      <summary>
+        <span class="nights"><b>${n}</b><span>${n===1?'לילה':'לילות'}</span></span>
+        <span class="hsum"><span class="n">${esc(h.name)}</span><span class="s">${esc(h.area)} · ${short(h.in)}–${short(h.out)}</span></span>
+        <span class="chev">${icon('down',22,'var(--muted)')}</span>
+      </summary>
+      <div class="hbody">
+        ${isNext ? `<span class="chip">${today >= h.in ? 'הלינה הנוכחית' : 'הלינה הבאה'}</span>` : ''}
+        <div class="kv">
+          <div><span>צ׳ק-אין</span><strong>${short(h.in)} · ${h.checkin}</strong></div>
+          <div><span>צ׳ק-אאוט</span><strong>${short(h.out)} · ${h.checkout}</strong></div>
+          <div><span>אישור Booking</span><strong class="code">${h.conf}</strong></div>
+          <div><span>ארוחת בוקר</span><strong>${h.breakfast}</strong></div>
+          <div><span>חדר</span><strong style="font-size:16px">${esc(h.room)}</strong></div>
+          <div><span>טלפון</span><strong style="font-size:16px"><a href="${telHref(h.phone)}">${h.phone}</a></strong></div>
+        </div>
+        <p class="addr">${esc(h.addr)}</p>
+        <div class="btns">
+          <a class="btn" href="${wazeUrl(h.name + ' ' + h.place + ' Costa Rica')}" target="_blank" rel="noopener">${icon('pin',20,'var(--on-accent)')}Waze</a>
+          <a class="btn out" href="${mapsUrl(h.name + ' ' + h.place + ' Costa Rica')}" target="_blank" rel="noopener">Google Maps</a>
+        </div>
+        <p class="tip"><b>תשלום:</b> ${esc(h.pay)}<br><b>ביטול:</b> ${esc(h.cancel)}${h.tip ? `<br>${esc(h.tip)}` : ''}</p>
+      </div>
+    </details>`;
+  }).join('');
+  const totalN = HOTELS.reduce((s,h) => s + nightsOf(h), 0);
+  return bandHeader('מלונות', `${HOTELS.length} מקומות · ${totalN} לילות · כל ההזמנות ב-Booking.com`, 'bookings') + `<main class="gut">${items}</main>`;
+}
+
+/* ================= ניתוב ================= */
+const ROUTES = { home, journey, bookings, flights, car, hotels, tobook, insurance };
+const TAB_OF = { home:'home', journey:'journey', bookings:'bookings', flights:'bookings', car:'bookings', hotels:'bookings', tobook:'bookings', insurance:'bookings' };
+
+$view.addEventListener('change', e => {
+  const cb = e.target.closest('[data-book]');
+  if (!cb) return;
+  const s = doneSet();
+  cb.checked ? s.add(cb.dataset.book) : s.delete(cb.dataset.book);
+  saveDone(s);
+  cb.closest('.ck').classList.toggle('done', cb.checked);
+});
+
+function render(keep){
+  const key = (location.hash || '#home').slice(1);
+  const r = ROUTES[key] ? key : 'home';
+  $view.innerHTML = ROUTES[r]();
+  if (!keep) { $view.classList.remove('view'); void $view.offsetWidth; $view.classList.add('view'); }
+  document.querySelectorAll('nav.tabs a').forEach(a => a.dataset.tab === TAB_OF[r] ? a.setAttribute('aria-current','page') : a.removeAttribute('aria-current'));
+  if (!keep) window.scrollTo(0,0);
+  if (r === 'journey' && !keep) {
+    const t = document.querySelector('.day.today');
+    if (t) t.scrollIntoView({block:'start'});
+    const b = document.querySelector('.daypick .today');
+    if (b) b.scrollIntoView({inline:'center', block:'nearest'});
+  }
+}
+
+$view.addEventListener('click', e => {
+  const g = e.target.closest('[data-goto]');
+  if (g) { const el = document.getElementById(g.dataset.goto); if (el) el.scrollIntoView({behavior:'smooth', block:'start'}); return; }
+  const c = e.target.closest('[data-copy]');
+  if (c) {
+    const v = c.dataset.copy;
+    try { navigator.clipboard.writeText(v).then(() => toast('הועתק: ' + v), () => toast(v)); }
+    catch (err) { toast(v); }
+  }
+});
+
+let tt;
+function toast(msg){ const t = document.getElementById('toast'); t.textContent = msg; t.hidden = false; clearTimeout(tt); tt = setTimeout(() => t.hidden = true, 2000); }
+window.addEventListener('hashchange', () => render(false));
+if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+render();
+</script>
+
+</body>
+</html>
