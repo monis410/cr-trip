@@ -1,5 +1,5 @@
 /* שומר את האפליקציה בטלפון כדי שתעבוד גם בלי קליטה. להעלות את המספר בכל עדכון */
-const VERSION = 'cr-v3';
+const VERSION = 'cr-v4';
 const SHELL = ['./', './index.html', './manifest.webmanifest', './icons/icon-180.png', './icons/icon-192.png', './icons/icon-512.png', './icons/icon-maskable-512.png'];
 
 self.addEventListener('install', e => {

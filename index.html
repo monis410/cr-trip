@@ -407,7 +407,7 @@ const PLAN = {
 };
 const KIND = { alt:'חלופה', opt:'אופציה', free:'זמן חופשי' };
 
-const SINAC = 'https://www.serviciosenlinea.sinac.go.cr/';
+const SINAC = 'https://serviciosenlinea.sinac.go.cr/';
 
 /* מידע מעשי לכל פעילות, לפי השם. q = חיפוש במפות. מקורות: אתרי מדריכים ו-Tico Times, נבדק באוקטובר 2026 */
 const INFO = {
@@ -948,6 +948,7 @@ function tobook(){
     </div>`).join('');
   return bandHeader('להזמין מראש', 'כרטיסים וסיורים שדורשים הזמנה. סמן מה כבר הוזמן.', 'bookings') + `<main class="gut">
     <p class="tip">באתר SINAC פותחים חשבון, בוחרים "Online Reservation", את הפארק, התאריך והשעה, ומזינים מספר דרכון. את אישור ההזמנה כדאי לשמור בטלפון, כי באחדים מהפארקים אין קליטה.</p>
+    <p class="tip"><b>אם האתר לא נפתח:</b> זו תקלה מוכרת באתר של SINAC, לפעמים ליום שלם. לנסות שוב מאוחר יותר, בחלון גלישה בסתר או מהמחשב. Corcovado ו-Isla del Caño לא נמכרים באתר, אלא דרך מפעיל הסיור.</p>
     <div class="check">${rows}</div>
     <p class="note-sm">הסימון נשמר רק בטלפון הזה.</p>
   </main>`;
