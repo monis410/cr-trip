@@ -173,6 +173,11 @@ details[open] .chev{transform:rotate(180deg)}
 .act p{margin:0;font-size:17px;color:var(--fg-2);line-height:1.45}
 .act p.atip{font-size:16px;color:var(--fg)}
 p.ag{margin:0;font-size:15px;color:var(--muted)}
+.dchip{font-size:13px;font-weight:700;border-radius:6px;padding:1px 8px;white-space:nowrap}
+.dchip.e{background:#1F4D36;color:#A8E6C1}
+.dchip.m{background:#4A3A12;color:#FFD27A}
+.dchip.h{background:#5A2214;color:#FFB4A0}
+.act p.dwhy{font-size:15px;color:var(--fg-2)}
 .kchip{font-size:13px;border:1px solid var(--muted);border-radius:6px;padding:1px 7px;color:var(--muted)}
 .links{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
 .lk{min-height:44px;display:inline-flex;align-items:center;gap:6px;padding:0 14px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--accent);text-decoration:none;font-size:15px;font-weight:700}
@@ -406,6 +411,46 @@ const PLAN = {
     { n:'Barrio Escalante', d:'ארוחת ערב ואווירה עירונית לערב האחרון בקוסטה ריקה.' } ]}
 };
 const KIND = { alt:'חלופה', opt:'אופציה', free:'זמן חופשי' };
+/* דרגת קושי להליכה – ביחס להולך בן 60 בכושר בינוני עם חולשה ברגל שמאל (צליעה קלה).
+   e=קל, m=בינוני, h=קשה. מבוסס על אורך, טיפוס מצטבר ותוואי (מדרגות, סלעים, בוץ, חול) */
+const DIFF = {
+  'Hacienda Alsacia': ['e','שבילים סלולים קצרים בחווה.'],
+  'Poás Volcano National Park': ['e','כ-600 מ\' בשביל סלול עד התצפית, עלייה מתונה. גובה 2,700 מ\' – ללכת לאט.'],
+  'Místico Arenal Hanging Bridges': ['m','לולאה של 3.2 ק"מ על שביל בטון, עם קטעים תלולים בהמשך וגשרים מתנדנדים. יש מסלול נגיש של 2.4 ק"מ בשיפוע מתון ובלי מדרגות.'],
+  'Arenal 1968': ['h','המסלול הארוך (Forest, 4.5 ק"מ) כולל עליות תלולות, מדרגות סלע ולבה חדה. עדיף מסלול Lava Flow הקצר, 2.5 ק"מ, שהוא בינוני.'],
+  'Don Juan Coffee & Chocolate Tour': ['e','הליכה קצרה ואיטית בחווה.'],
+  'Peñas Blancas Wildlife Safari Float': ['e','כמעט בלי הליכה. עלייה וירידה מהסירה בגדת הנהר.'],
+  'Río Celeste Tubing': ['m','כניסה ויציאה מהנהר על סלעים חלקים בגדה. לבקש עזרה מהמדריך.'],
+  'סיור לילה מודרך ב-Tenorio / Bijagua': ['m','הליכה איטית בחושך על שביל לא אחיד. פנס חזק חובה.'],
+  'Tenorio National Park': ['h','6–7 ק"מ הלוך-חזור, 253 מדרגות במורד ובמעלה המפל, שורשים ובוץ. אפשר לוותר על המדרגות למפל ולקצר מאוד את המאמץ.'],
+  'Las Pailas': ['m','לולאה של 3.5 ק"מ, עליות וירידות קצרות, שביל סלעי עם שורשים.'],
+  'Oropéndola Waterfall': ['m','כ-15 דקות לכל כיוון, ירידה תלולה במדרגות בנויות וגשר תלוי. העלייה בחזרה היא החלק הקשה.'],
+  'Río Negro Hot Springs': ['e','שבילים קצרים בין הבריכות, חלקלקים מבוץ ומים.'],
+  'Santa Elena': ['e','הליכה בעיירה.'],
+  'הליכה קצרה בטבע': ['e','לבחור שביל קצר ושטוח.'],
+  'Night Walk': ['m','כשעתיים בקצב איטי, בחושך ועל שביל לא אחיד.'],
+  'Monteverde Cloud Forest Preserve': ['e','מסלול Heart of the Forest: 2.8 ק"מ, שטוח ברובו, עם שורשים ובוץ. מסלול Continental Divide (4.1 ק"מ, עליות) הוא בינוני.'],
+  'Curi-Cancha Reserve': ['m','שבילים עפר עם עליות וירידות מתונות.'],
+  'Cabo Blanco Absolute Natural Reserve': ['m','לולאת Danés: כ-2 ק"מ, גבעית, עם מדרגות בטון לא אחידות ושורשים. השביל לחוף (10 ק"מ) קשה – לא לעשות.'],
+  'Cabuya': ['e',''],
+  'Montezuma': ['e','הליכה בעיירה.'],
+  'Montezuma Waterfalls': ['h','כ-20 דקות במעלה אפיק נהר על סלעים חלקים, עם חבלים בחלק מהמקומות. הדרך החלופית היא כ-200 מדרגות תלולות.'],
+  'Playa Hermosa / Mal País': ['m','הליכה על סלעים חלקים ורטובים בין בריכות הסלע. לנעול נעלי מים.'],
+  'Sirena Station': ['m','5–10 ק"מ בשביל שטוח, אבל עם חול, בוץ, חום ולחות גבוהים, ונחיתה רטובה מהסירה.'],
+  'San Pedrillo': ['m','שבילים קצרים, אבל נחיתה רטובה מהסירה בחוף.'],
+  'Marino Ballena National Park': ['m','כ-30 דקות לכל כיוון על חול ועל לשון חול רטובה. חול רך מקשה על הליכה עם צליעה.'],
+  'Eco Feria Dominical': ['e',''],
+  'עמק אורוסי': ['e',''],
+  'Iglesia Colonial de Orosi': ['e',''],
+  'Tapantí National Park': ['m','לבחור את שביל Oropéndola (1.2 ק"מ, קל). שבילי המפל יורדים בתלילות לנהר על סלעים חלקים.'],
+  'Lankester Botanical Garden': ['e','שבילים מסודרים ושטוחים ברובם.'],
+  'Cahuita National Park': ['m','שטוח, על חול ושביל עץ, אבל 3–4 שעות הליכה, שורשים וחציית נחלים בגובה הברך.'],
+  'Bribri Indigenous Experience': ['m','ההליכה למפל עוברת בשביל כפרי ובוצי. לברר עם המפעיל את האורך ומה התוואי.'],
+  'Barrio Escalante': ['e','הליכה בשכונה.']
+};
+const DLV = { e:'קל', m:'בינוני', h:'קשה' };
+const diffChip = n => { const d = DIFF[n]; return d ? `<span class="dchip ${d[0]}">${DLV[d[0]]}</span>` : ''; };
+
 
 const SINAC = 'https://serviciosenlinea.sinac.go.cr/';
 
@@ -774,7 +819,7 @@ function home(){
       <span class="label">יום ${d.n} מתוך ${TRIP_DAYS}</span>
       <span class="loc">${esc(d.title)}</span>
       <ul>${d.items.map(x => `<li>${icon(x.ic,20,'var(--muted)')}<span>${esc(x.t)}${x.m ? `<br><span style="color:var(--muted);font-size:15px">${esc(x.m)}</span>` : ''}</span></li>`).join('')}${
-        d.plan ? d.plan.acts.filter(a => a.kind !== 'alt').map(a => `<li>${icon('dot',20, a.kind ? 'var(--muted)' : 'var(--accent)')}<span><b>${esc(a.n)}</b>${a.kind ? ` <span style="color:var(--muted);font-size:15px">· ${KIND[a.kind]}</span>` : ''}</span></li>`).join('') : ''}</ul>
+        d.plan ? d.plan.acts.filter(a => a.kind !== 'alt').map(a => `<li>${icon('dot',20, a.kind ? 'var(--muted)' : 'var(--accent)')}<span><b>${esc(a.n)}</b> ${diffChip(a.n)}${a.kind ? ` <span style="color:var(--muted);font-size:15px">· ${KIND[a.kind]}</span>` : ''}</span></li>`).join('') : ''}</ul>
       ${d.plan && d.plan.rule ? `<p class="tip" style="margin:0">${esc(d.plan.rule)}</p>` : ''}
       ${d.stay ? `<span style="font-size:16px;color:var(--fg-2)">לינה הלילה: <b>${esc(d.stay.name)}</b></span>` : ''}
       <a class="linkbtn" href="#journey">${icon('map',20)}לפרטי היום במסע</a>
@@ -843,8 +888,9 @@ function actsHTML(p){
       if (inf.q) { links.push(lk(mapsUrl(inf.q), 'מפה', 'pin')); links.push(lk(wazeUrl(inf.q), 'Waze')); }
       if (inf.book) links.push(lk(inf.book, 'כרטיסים ב-SINAC', 'ticket'));
       return `<li class="act ${a.kind || ''}">
-      <div class="an"><b>${esc(a.n)}</b>${a.kind ? `<span class="kchip">${KIND[a.kind]}</span>` : ''}</div>
+      <div class="an"><b>${esc(a.n)}</b>${diffChip(a.n)}${a.kind ? `<span class="kchip">${KIND[a.kind]}</span>` : ''}</div>
       <p>${esc(a.d)}</p>
+      ${DIFF[a.n] && DIFF[a.n][1] ? `<p class="dwhy"><b>הליכה:</b> ${esc(DIFF[a.n][1])}</p>` : ''}
       ${a.tip ? `<p class="atip"><b>טיפ:</b> ${esc(a.tip)}</p>` : ''}
       ${a.g ? `<p class="ag">מדריך: ${esc(a.g)}</p>` : ''}
       ${inf.info ? `<ul class="info">${inf.info.map(s => `<li>${esc(s)}</li>`).join('')}</ul>` : ''}
@@ -872,7 +918,7 @@ function journey(){
       <p class="sub">${TRIP_DAYS} ימים · ${HOTELS.length} מקומות לינה · ${short(TRIP.start)}–${short(TRIP.end)}</p>
     </header>
     <div class="pickbar gut"><nav class="daypick" aria-label="קפיצה ליום">${picks}</nav></div>
-    <main class="gut">${cards}</main>`;
+    <main class="gut"><p class="note-sm">דרגת הקושי מתייחסת להולך בן 60 בכושר בינוני עם חולשה ברגל שמאל: <span class="dchip e">קל</span> <span class="dchip m">בינוני</span> <span class="dchip h">קשה</span></p>${cards}</main>`;
 }
 
 /* ================= הזמנות ================= */
