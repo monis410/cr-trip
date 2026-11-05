@@ -250,7 +250,7 @@ const FLIGHTS = {
   legs:[
     { dir:'הלוך', date:'2026-11-24', label:'שלישי 24.11', total:'26:15 שעות', departISO:'2026-11-24T01:00:00+02:00',
       segments:[
-        { flight:'LH 691', op:'Lufthansa', plane:'Airbus A321neo', seat:'לא נבחר', note:'עצירת ביניים באתונה, בלי להחליף מטוס',
+        { flight:'LH 691', op:'Lufthansa', plane:'Airbus A321neo', seat:'לא נבחר', note:'עצירת ביניים באתונה 03:10–03:55, באותה טיסה',
           from:{code:'TLV',city:'תל אביב',term:'טרמינל 3',time:'01:00',old:'05:15'}, to:{code:'FRA',city:'פרנקפורט',term:'טרמינל 1',time:'06:00',old:'08:55'} },
         { layover:'פרנקפורט', dur:'8:00 שעות' },
         { flight:'LH 518', op:'Lufthansa', plane:'Boeing 787-9', seat:'16H · Extra Legroom',
@@ -1024,7 +1024,7 @@ function flights(){
       ${l.segments.map(segHTML).join('')}
     </section>`).join('');
   return bandHeader('טיסות', `${f.airline} · ${f.fare}`, 'bookings') + `<main class="gut">
-    ${f.scheduleChanged ? `<div class="notice" role="note">${icon('alert',22)}<span>ב-5.11 SWISS שלחו הזמנה מעודכנת: LH 691 ממריאה ב-01:00 בלילה שבין 23.11 ל-24.11, עם עצירה באתונה והמתנה של 8 שעות בפרנקפורט. גם LX 252 זזה ל-12:15. השעות כאן הן העדכניות.</span></div>` : ''}
+    ${f.scheduleChanged ? `<div class="notice" role="note">${icon('alert',22)}<span>ב-5.11 SWISS שלחו הזמנה מעודכנת: LH 691 ממריאה ב-01:00 בלילה שבין 23.11 ל-24.11, עם עצירה באתונה והמתנה של 8 שעות בפרנקפורט. גם LX 252 זזה ל-12:15. השעות כאן אומתו מול אתר SWISS ב-5.11: ההזמנה מאושרת, Economy Flex, כולל מזוודה של 23 ק"ג בשני הכיוונים.</span></div>` : ''}
     ${legs}
     <section class="card">
       <h2>פרטי הזמנה</h2>
