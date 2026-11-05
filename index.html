@@ -248,21 +248,21 @@ const FLIGHTS = {
   manageUrl:'https://www.swiss.com/il/en/manage-booking',
   scheduleChanged:true,
   legs:[
-    { dir:'הלוך', date:'2026-11-24', label:'שלישי 24.11', total:'22:00 שעות', departISO:'2026-11-24T05:15:00+02:00',
+    { dir:'הלוך', date:'2026-11-24', label:'שלישי 24.11', total:'26:15 שעות', departISO:'2026-11-24T01:00:00+02:00',
       segments:[
-        { flight:'LH 691', op:'Lufthansa', plane:'Airbus A321neo', seat:'לא נבחר',
-          from:{code:'TLV',city:'תל אביב',term:'טרמינל 3',time:'05:15'}, to:{code:'FRA',city:'פרנקפורט',term:'טרמינל 1',time:'08:55'} },
-        { layover:'פרנקפורט', dur:'5:05 שעות' },
+        { flight:'LH 691', op:'Lufthansa', plane:'Airbus A321neo', seat:'לא נבחר', note:'עצירת ביניים באתונה, בלי להחליף מטוס',
+          from:{code:'TLV',city:'תל אביב',term:'טרמינל 3',time:'01:00',old:'05:15'}, to:{code:'FRA',city:'פרנקפורט',term:'טרמינל 1',time:'06:00',old:'08:55'} },
+        { layover:'פרנקפורט', dur:'8:00 שעות' },
         { flight:'LH 518', op:'Lufthansa', plane:'Boeing 787-9', seat:'16H · Extra Legroom',
-          from:{code:'FRA',city:'פרנקפורט',term:'טרמינל 1',time:'14:00',old:'13:40'}, to:{code:'SJO',city:'סן חוסה',term:'טרמינל M',time:'19:15',old:'18:55'} }
+          from:{code:'FRA',city:'פרנקפורט',term:'טרמינל 1',time:'14:00'}, to:{code:'SJO',city:'סן חוסה',term:'טרמינל M',time:'19:15'} }
       ]},
-    { dir:'חזור', date:'2026-12-16', label:'רביעי 16.12', total:'16:15 שעות', departISO:'2026-12-16T16:40:00-06:00',
+    { dir:'חזור', date:'2026-12-16', label:'רביעי 16.12', total:'16:30 שעות', departISO:'2026-12-16T16:40:00-06:00',
       segments:[
-        { flight:'LX 8037', op:'Edelweiss Air', plane:'Airbus A350-900', seat:'לא נבחר',
+        { flight:'LX 8037', op:'Edelweiss Air', plane:'Airbus A350-900', seat:'40C · Extra Legroom',
           from:{code:'SJO',city:'סן חוסה',term:'טרמינל M',time:'16:40'}, to:{code:'ZRH',city:'ציריך',term:'',time:'10:15',plus:'+1'} },
-        { layover:'ציריך', dur:'1:50 שעות' },
+        { layover:'ציריך', dur:'2:00 שעות' },
         { flight:'LX 252', op:'SWISS', plane:'Airbus A321neo', seat:'לא נבחר',
-          from:{code:'ZRH',city:'ציריך',term:'',time:'12:05',old:'12:20'}, to:{code:'TLV',city:'תל אביב',term:'טרמינל 3',time:'16:55',old:'17:15'} }
+          from:{code:'ZRH',city:'ציריך',term:'',time:'12:15',old:'12:05'}, to:{code:'TLV',city:'תל אביב',term:'טרמינל 3',time:'17:10',old:'16:55'} }
       ]}
   ]
 };
@@ -618,7 +618,7 @@ const DAYS = (() => {
     let title, place, drive = null;
     if (i === 0) {
       title = 'טיסה ונחיתה בסן חוסה'; place = 'San José';
-      items.push({ic:'plane', t:'05:15 המראה מתל אביב, עצירה בפרנקפורט', m:'LH 691 → LH 518'});
+      items.push({ic:'plane', t:'01:00 המראה מתל אביב, עצירה באתונה והמתנה בפרנקפורט', m:'LH 691 → LH 518'});
       items.push({ic:'plane', t:'19:15 נחיתה בסן חוסה (SJO)'});
       items.push({ic:'car', t:'20:00 איסוף רכב Adobe בשדה', m:'שובר אופרן 45381058'});
       drive = DRIVES['airport>sj1'];
@@ -626,7 +626,7 @@ const DAYS = (() => {
       title = 'יום חזרה'; place = 'San José';
       items.push({ic:'bed', t:`צ׳ק-אאוט מ-${left.name}`, m:left.checkout});
       items.push({ic:'car', t:'15:00 החזרת רכב בשדה התעופה', m:'מיכל מלא'});
-      items.push({ic:'plane', t:'16:40 המראה לציריך', m:'LX 8037 → LX 252, נחיתה בתל אביב 17.12 ב-16:55'});
+      items.push({ic:'plane', t:'16:40 המראה לציריך', m:'LX 8037 → LX 252, נחיתה בתל אביב 17.12 ב-17:10'});
       drive = DRIVES['sj2>airport'];
     } else if (left && stay && left.id !== stay.id) {
       title = `${left.area.split(' (')[0]} ← ${stay.area.split(' (')[0]}`; place = stay.place;
@@ -830,7 +830,7 @@ function home(){
       <span class="label">היום</span>
       <span class="loc">עוד לא יצאנו</span>
       <ul>
-        <li>${icon('plane',20)}<span>הטיסה הבאה: ${FLIGHTS.legs[0].label} ב-05:15 מנתב"ג<br><span style="color:var(--muted);font-size:15px">כדאי להגיע לשדה 3 שעות לפני</span></span></li>
+        <li>${icon('plane',20)}<span>הטיסה הבאה: ${FLIGHTS.legs[0].label} ב-01:00 בלילה מנתב"ג (כלומר בלילה שבין 23.11 ל-24.11)<br><span style="color:var(--muted);font-size:15px">כדאי להגיע לשדה 3 שעות לפני</span></span></li>
         <li>${icon('bed',20)}<span>לילה ראשון: ${esc(first.stay.name)}, ${esc(first.stay.area)}</span></li>
         <li>${icon('car',20)}<span>איסוף רכב בשדה ב-20:00</span></li>
       </ul>
@@ -1012,7 +1012,7 @@ function segHTML(s){
     <div class="ends">${end(s.from)}
       <svg width="28" height="28" viewBox="0 0 24 24" role="img" aria-label="אל" style="color:var(--accent);flex-shrink:0"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M19 12H5m7 7-7-7 7-7"/></svg>
       ${end(s.to)}</div>
-    <div class="meta"><span><b>${s.flight}</b> · ${s.op}</span><span>${s.plane}</span><span>מושב: ${s.seat}</span></div>
+    ${s.note ? `<div class="lay">${icon('clock',20,'var(--muted)')}<span>${s.note}</span></div>` : ''}<div class="meta"><span><b>${s.flight}</b> · ${s.op}</span><span>${s.plane}</span><span>מושב: ${s.seat}</span></div>
   </div>`;
 }
 
@@ -1024,7 +1024,7 @@ function flights(){
       ${l.segments.map(segHTML).join('')}
     </section>`).join('');
   return bandHeader('טיסות', `${f.airline} · ${f.fare}`, 'bookings') + `<main class="gut">
-    ${f.scheduleChanged ? `<div class="notice" role="note">${icon('alert',22)}<span>SWISS שינו את שעות הטיסות LH 518 ו-LX 252. השעות כאן הן החדשות. כדאי לוודא באתר SWISS שהשינוי אושר.</span></div>` : ''}
+    ${f.scheduleChanged ? `<div class="notice" role="note">${icon('alert',22)}<span>ב-5.11 SWISS שלחו הזמנה מעודכנת: LH 691 ממריאה ב-01:00 בלילה שבין 23.11 ל-24.11, עם עצירה באתונה והמתנה של 8 שעות בפרנקפורט. גם LX 252 זזה ל-12:15. השעות כאן הן העדכניות.</span></div>` : ''}
     ${legs}
     <section class="card">
       <h2>פרטי הזמנה</h2>
