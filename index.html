@@ -314,6 +314,16 @@ const HOTELS = [
     cancel:'ביטול חינם עד 9.12', pay:'Booking.com יחייב אוטומטית.' }
 ];
 
+/* קואורדינטות GPS ואישורי הזמנה (PDF) – מתוך אישורי Booking. קוד ה-PIN הושחר בקבצים */
+const DOCBASE = '';
+const HOTEL_LL = {
+  sj1:[9.93147,-84.06762], fortuna:[10.46970,-84.66560], bijagua:[10.71233,-85.07168], rincon:[10.72905,-85.39610],
+  monteverde:[10.31193,-84.81488], teresa:[9.64455,-85.16797], dominical:[9.25338,-83.86362], orosi:[9.79413,-83.85603],
+  puertoviejo:[9.63698,-82.69207], sj2:[9.93573,-84.06290]
+};
+HOTELS.forEach(h => { h.ll = HOTEL_LL[h.id]; h.doc = DOCBASE + 'docs/' + h.id + '.pdf'; });
+const llStr = h => h.ll ? h.ll.join(',') : `${h.name}, ${h.place}, Costa Rica`;
+
 /* זמני נסיעה משוערים בין מקומות הלינה – לבדוק ב-Waze ביום הנסיעה */
 const DRIVES = {
   'airport>sj1':'כ-20 דקות', 'sj1>fortuna':'כ-3 שעות', 'fortuna>bijagua':'כ-2 שעות', 'bijagua>rincon':'כ-1.5 שעות',
@@ -637,7 +647,7 @@ const DAYS = (() => {
     } else {
       title = stay.area.split(' (')[0]; place = stay.place;
     }
-    const hq = h => `${h.name}, ${h.place}, Costa Rica`;
+    const hq = h => llStr(h);
     const AIRPORT = 'Juan Santamaría International Airport';
     let route = null;
     if (i === 0) route = { o:AIRPORT, d:hq(stay) };
@@ -1113,9 +1123,11 @@ function hotels(){
         </div>
         <p class="addr">${esc(h.addr)}</p>
         <div class="btns">
-          <a class="btn" href="${wazeUrl(h.name + ' ' + h.place + ' Costa Rica')}" target="_blank" rel="noopener">${icon('pin',20,'var(--on-accent)')}Waze</a>
-          <a class="btn out" href="${mapsUrl(h.name + ' ' + h.place + ' Costa Rica')}" target="_blank" rel="noopener">Google Maps</a>
+          <a class="btn" href="${h.ll ? 'https://waze.com/ul?ll=' + h.ll.join('%2C') + '&navigate=yes' : wazeUrl(h.name + ' ' + h.place + ' Costa Rica')}" target="_blank" rel="noopener">${icon('pin',20,'var(--on-accent)')}Waze</a>
+          <a class="btn out" href="${mapsUrl(llStr(h))}" target="_blank" rel="noopener">Google Maps</a>
         </div>
+        <a class="btn out" href="${h.doc}" target="_blank" rel="noopener">${icon('ticket',20)}אישור הזמנה (PDF)</a>
+        ${h.ll ? `<p class="note-sm">GPS: ${h.ll[0].toFixed(5)}, ${h.ll[1].toFixed(5)}</p>` : ''}
         <p class="tip"><b>תשלום:</b> ${esc(h.pay)}<br><b>ביטול:</b> ${esc(h.cancel)}${h.tip ? `<br>${esc(h.tip)}` : ''}</p>
       </div>
     </details>`;
