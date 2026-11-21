@@ -472,7 +472,7 @@ const INFO = {
     'עד 20 דקות בתצפית על הלוע. קסדה חובה ומחולקת במקום.',
     'אחרי ההתפרצות באוגוסט 2026 הוגבל מספר המבקרים. להזמין מוקדם ולבדוק סטטוס יום לפני.',
     'קר בפסגה, כ-12–15 מעלות.' ]},
-  'Místico Arenal Hanging Bridges': { q:'Mistico Arenal Hanging Bridges Park' },
+  'Místico Arenal Hanging Bridges': { q:'Mistico Arenal Hanging Bridges Park', ticket:{ txt:'כרטיס מוזמן: Self-Guided Walk, 26.11 בשעה 9:30, להגיע בזמן. אישור B-G8V86ZG. מותר להכניס רק מים.' }, info:['כולל גם את שביל Pachucos ואת מפל Blue Morpho.','ביטול עם החזר מלא עד 48 שעות לפני. טלפון: ‎+506 2479 8282.'] },
   'Tabacón Hot Springs': { q:'Tabacón Thermal Resort & Spa', info:['כדאי להזמין כרטיס יומי מראש.'] },
   'Arenal 1968': { q:'Arenal 1968 Volcano View and Lava Trails' },
   'Don Juan Coffee & Chocolate Tour': { q:'Don Juan Coffee Tour, La Fortuna', info:['סיור בשעות קבועות, להזמין מראש.'] },
@@ -572,7 +572,8 @@ const TOBOOK = [
   { id:'inscheck', date:'2026-11-20', when:'לפני היציאה', t:'לבדוק באישור הביטוח מ-14.10 כיסוי לאבובים, שנורקלינג ושיט', m:'הקובץ נפתח עם מספר ת"ז' },
   { id:'delayout', date:'2026-11-23', when:'עד 6 שעות לפני ההמראה ב-24.11', t:'הרשמה לשירות עיכוב טיסה – הלוך', m:'פספורטכארד. בלי הרשמה אין כניסה לטרקלין' },
   { id:'poas', date:'2026-11-25', t:'Poás – כרטיס כניסה', m:'הוזמן: כניסה ב-10:00, מספר אימות C09E85', done:true },
-  { id:'mistico', date:'2026-11-26', t:'Místico – כרטיס ומדריך טבע' },
+  { id:'mistico', date:'2026-11-26', t:'Místico – כרטיס כניסה', m:'הוזמן: 9:30, אישור B-G8V86ZG (סיור עצמאי, בלי מדריך)', done:true },
+  { id:'misticowaiver', date:'2026-11-25', t:'Místico – לחתום על כתב ויתור (waiver)', m:'מהקישור במייל של Mistico Park מ-21.11, לפני ההגעה' },
   { id:'tabacon', date:'2026-11-26', t:'Tabacón – כרטיס יומי' },
   { id:'donjuan', date:'2026-11-27', t:'Don Juan – סיור קפה ושוקולד' },
   { id:'float', date:'2026-11-28', t:'Peñas Blancas Safari Float' },
@@ -896,7 +897,7 @@ function actsHTML(p){
       const inf = INFO[a.n] || {};
       const links = [];
       if (inf.q) { links.push(lk(mapsUrl(inf.q), 'מפה', 'pin')); links.push(lk(wazeUrl(inf.q), 'Waze')); }
-      if (inf.ticket) links.push(lk((typeof DOCBASE !== 'undefined' ? DOCBASE : '') + inf.ticket.doc, 'כרטיס כניסה (PDF)', 'ticket'));
+      if (inf.ticket && inf.ticket.doc) links.push(lk((typeof DOCBASE !== 'undefined' ? DOCBASE : '') + inf.ticket.doc, 'כרטיס כניסה (PDF)', 'ticket'));
       else if (inf.book) links.push(lk(inf.book, 'כרטיסים ב-SINAC', 'ticket'));
       return `<li class="act ${a.kind || ''}">
       <div class="an"><b>${esc(a.n)}</b>${diffChip(a.n)}${a.kind ? `<span class="kchip">${KIND[a.kind]}</span>` : ''}</div>
