@@ -467,7 +467,7 @@ const SINAC = 'https://serviciosenlinea.sinac.go.cr/';
 /* מידע מעשי לכל פעילות, לפי השם. q = חיפוש במפות. מקורות: אתרי מדריכים ו-Tico Times, נבדק באוקטובר 2026 */
 const INFO = {
   'Hacienda Alsacia': { q:'Hacienda Alsacia Starbucks Coffee Farm, Alajuela' },
-  'Poás Volcano National Park': { q:'Poás Volcano National Park', book:SINAC, info:[
+  'Poás Volcano National Park': { q:'Poás Volcano National Park', ticket:{ doc:'docs/poas.pdf', code:'C09E85', txt:'כרטיס מוזמן: 25.11, קבוצה 07, כניסה ב-10:00. מספר אימות C09E85, הזמנה 12623493. להציג דרכון בכניסה.' }, info:[
     'כרטיס רק מראש באתר SINAC, עם שעת כניסה. כניסה אחרונה 14:00.',
     'עד 20 דקות בתצפית על הלוע. קסדה חובה ומחולקת במקום.',
     'אחרי ההתפרצות באוגוסט 2026 הוגבל מספר המבקרים. להזמין מוקדם ולבדוק סטטוס יום לפני.',
@@ -571,7 +571,7 @@ const TOBOOK = [
   { id:'esim', date:'2026-11-20', when:'לפני היציאה', t:'להתקין את ה-eSIM של פספורטכארד (25GB)', m:'מהקישור במייל מפספורטכארד מ-3.9' },
   { id:'inscheck', date:'2026-11-20', when:'לפני היציאה', t:'לבדוק באישור הביטוח מ-14.10 כיסוי לאבובים, שנורקלינג ושיט', m:'הקובץ נפתח עם מספר ת"ז' },
   { id:'delayout', date:'2026-11-23', when:'עד 6 שעות לפני ההמראה ב-24.11', t:'הרשמה לשירות עיכוב טיסה – הלוך', m:'פספורטכארד. בלי הרשמה אין כניסה לטרקלין' },
-  { id:'poas', date:'2026-11-25', t:'Poás – כרטיס כניסה', m:'רק באתר SINAC, עם שעת כניסה', u:SINAC },
+  { id:'poas', date:'2026-11-25', t:'Poás – כרטיס כניסה', m:'הוזמן: כניסה ב-10:00, מספר אימות C09E85', done:true },
   { id:'mistico', date:'2026-11-26', t:'Místico – כרטיס ומדריך טבע' },
   { id:'tabacon', date:'2026-11-26', t:'Tabacón – כרטיס יומי' },
   { id:'donjuan', date:'2026-11-27', t:'Don Juan – סיור קפה ושוקולד' },
@@ -896,13 +896,15 @@ function actsHTML(p){
       const inf = INFO[a.n] || {};
       const links = [];
       if (inf.q) { links.push(lk(mapsUrl(inf.q), 'מפה', 'pin')); links.push(lk(wazeUrl(inf.q), 'Waze')); }
-      if (inf.book) links.push(lk(inf.book, 'כרטיסים ב-SINAC', 'ticket'));
+      if (inf.ticket) links.push(lk((typeof DOCBASE !== 'undefined' ? DOCBASE : '') + inf.ticket.doc, 'כרטיס כניסה (PDF)', 'ticket'));
+      else if (inf.book) links.push(lk(inf.book, 'כרטיסים ב-SINAC', 'ticket'));
       return `<li class="act ${a.kind || ''}">
       <div class="an"><b>${esc(a.n)}</b>${diffChip(a.n)}${a.kind ? `<span class="kchip">${KIND[a.kind]}</span>` : ''}</div>
       <p>${esc(a.d)}</p>
       ${DIFF[a.n] && DIFF[a.n][1] ? `<p class="dwhy"><b>הליכה:</b> ${esc(DIFF[a.n][1])}</p>` : ''}
       ${a.tip ? `<p class="atip"><b>טיפ:</b> ${esc(a.tip)}</p>` : ''}
       ${a.g ? `<p class="ag">מדריך: ${esc(a.g)}</p>` : ''}
+      ${inf.ticket ? `<p class="atip" style="color:var(--accent)"><b>✓</b> ${esc(inf.ticket.txt)}</p>` : ''}
       ${inf.info ? `<ul class="info">${inf.info.map(s => `<li>${esc(s)}</li>`).join('')}</ul>` : ''}
       ${links.length ? `<div class="links">${links.join('')}</div>` : ''}
     </li>`; }).join('')}</ul>
@@ -942,7 +944,7 @@ function bookings(){
     ${tile('car','car','רכב', `${CAR.model.split(' או')[0]} · ${CAR.days} ימים · איסוף ${short(TRIP.start)}`)}
     ${tile('hotels','bed','מלונות', `${HOTELS.length} מקומות · הבא: ${nextHotel.name}`)}
     ${tile('insurance','shield','ביטוח נסיעות', `${INS.company} · פוליסה ${INS.policy}`)}
-    ${tile('tobook','ticket','להזמין מראש', `${TOBOOK.filter(b => !doneSet().has(b.id)).length} מתוך ${TOBOOK.length} עוד פתוחים`)}
+    ${tile('tobook','ticket','להזמין מראש', `${TOBOOK.filter(b => !b.done && !doneSet().has(b.id)).length} מתוך ${TOBOOK.length} עוד פתוחים`)}
   </div></main>`;
 }
 
@@ -993,8 +995,8 @@ function saveDone(s){ try { localStorage.setItem(DONE_KEY, JSON.stringify([...s]
 
 function tobook(){
   const done = doneSet();
-  const rows = TOBOOK.map(b => `<div class="ck ${done.has(b.id)?'done':''}">
-      <input type="checkbox" id="bk-${b.id}" data-book="${b.id}" ${done.has(b.id)?'checked':''}>
+  const rows = TOBOOK.map(b => `<div class="ck ${(b.done || done.has(b.id))?'done':''}">
+      <input type="checkbox" id="bk-${b.id}" data-book="${b.id}" ${(b.done || done.has(b.id))?'checked':''}>
       <label for="bk-${b.id}">
         <span class="cd">${b.when || (short(b.date) + ' · יום ' + (diffDays(TRIP.start, b.date) + 1))}</span>
         <span class="ct">${esc(b.t)}</span>
