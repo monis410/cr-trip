@@ -411,7 +411,7 @@ const PLAN = {
     { n:'Iglesia Colonial de Orosi', d:'הכנסייה הקולוניאלית והמוזיאון הסמוך.' },
     { n:'Hacienda Orosi Hot Springs', d:'לערב. לא חובה, במיוחד אחרי Tabacón ו-Río Negro.', kind:'opt' } ]},
   '2026-12-12': { title:'Tapantí והקריביים', g:'לא נדרש', acts:[
-    { n:'Tapantí National Park', d:'מסלול קצר של כשעתיים בפארק.' },
+    { n:'Tapantí National Park', d:'כניסה 08:00–09:40. מסלול קצר של כשעתיים בפארק.' },
     { n:'Lankester Botanical Garden', d:'אם יורד גשם חזק או שתנאי השבילים לא טובים.', kind:'alt' },
     { n:'Punta Uva', d:'אחר הצהריים, חוף רגוע בלבד.', kind:'free' } ]},
   '2026-12-13': { title:'Cahuita National Park', acts:[
@@ -532,7 +532,7 @@ const INFO = {
   'עמק אורוסי': { q:'Orosi, Cartago' },
   'Iglesia Colonial de Orosi': { q:'Iglesia de San José de Orosi' },
   'Hacienda Orosi Hot Springs': { q:'Hacienda Orosi Hot Springs' },
-  'Tapantí National Park': { q:'Parque Nacional Tapantí Macizo de la Muerte', book:SINAC, info:[
+  'Tapantí National Park': { q:'Parque Nacional Tapantí Macizo de la Muerte', ticket:{ doc:'docs/tapanti.pdf', code:'C0AAC0', txt:'כרטיס מוזמן: 12.12, קבוצה 01, כניסה 08:00–09:40. מספר אימות C0AAC0, הזמנה 12626624. להביא דרכון.' }, info:[
     'כרטיס מראש באתר SINAC. פתוח 8:00–16:00, כניסה אחרונה 15:00.',
     'אין קליטה בפארק. לשמור את האישור בטלפון מראש.',
     'שביל Oropéndola קל, כ-1.2 ק"מ. אסור לשחות בנהר.' ]},
@@ -570,7 +570,7 @@ const DAYX = {
   '2026-12-09': { bring:['כרטיס אשראי לכניסה','מזומן לחניה','מים ואוכל','ציוד שנורקל'], tide:'Uvita Costa Rica' },
   '2026-12-10': { bring:['בגד ים ומגבת','קרם הגנה ידידותי לשונית','כדור נגד בחילה, למי שנוטה'] },
   '2026-12-11': { via:['Eco Feria Dominical'], bring:['מזומן לשוק'] },
-  '2026-12-12': { via:['Parque Nacional Tapantí Macizo de la Muerte'], bring:['מעיל גשם','נעליים סגורות','אישור SINAC שמור'] },
+  '2026-12-12': { via:['Parque Nacional Tapantí Macizo de la Muerte'], bring:['מעיל גשם','נעליים סגורות','כרטיס SINAC','דרכון'] },
   '2026-12-13': { bring:['סנדלים לחציית נחלים','מזומן לתרומה','דוחה יתושים','בגד ים'] },
   '2026-12-14': { bring:['נעלי שטח','מזומן'] }
 };
@@ -594,7 +594,7 @@ const TOBOOK = [
   { id:'mvreserve', date:'2026-12-03', t:'Monteverde – כרטיס למסלול + Natural History Walk', m:'הוזמן: 09:00, קוד AS-LQPC-60364', done:true },
   { id:'corcovado', date:'2026-12-08', t:'Corcovado – סיור מאורגן', m:'2–4 שבועות מראש' },
   { id:'cano', date:'2026-12-10', t:'Isla del Caño – סיור שנורקלינג' },
-  { id:'tapanti', date:'2026-12-12', t:'Tapantí – כרטיס כניסה', m:'באתר SINAC', u:SINAC },
+  { id:'tapanti', date:'2026-12-12', t:'Tapantí – כרטיס כניסה', m:'הוזמן: כניסה 08:00–09:40, אימות C0AAC0', done:true },
   { id:'bribri', date:'2026-12-14', t:'Bribri – חוויה קהילתית' },
   { id:'delayback', date:'2026-12-16', when:'עד 6 שעות לפני ההמראה ב-16.12', t:'הרשמה לשירות עיכוב טיסה – חזור', m:'פספורטכארד' }
 ];
