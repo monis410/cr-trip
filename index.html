@@ -377,7 +377,8 @@ const PLAN = {
     { n:'אחר הצהריים', d:'זמן חופשי, קפה ומנוחה.', kind:'free' } ],
     rule:'לא לעשות את שתי השמורות באותו יום.' },
   '2026-12-04': { title:'סנטה תרזה', acts:[
-    { n:'מעבורת Puntarenas–Paquera', d:'מעבורת Naviera Tambor מפונטרנס לפקרה, ומשם נסיעה לסנטה תרזה.' },
+    { n:'יציאה ממונטוורדה', d:'בסביבות 09:00, אחרי ארוחת בוקר וצ׳ק־אאוט. הנסיעה לפונטרנס כשעתיים עד שעתיים וחצי.', tip:'לבדוק ב-Waze את זמן הנסיעה בערב לפני.' },
+    { n:'מעבורת Puntarenas–Paquera', d:'12:00 הפלגה לפקרה. חובה להתייצב ברציף עד 11:30.', tip:'מי שמאחר מאבד את המקום בלי החזר. אחרי ההגעה לפקרה, כשעה ורבע נסיעה לסנטה תרזה.' },
     { n:'חוף ושקיעה', d:'אחר הצהריים.', kind:'free' } ],
     rule:'יום מעבר ארוך. לא לתכנן פעילות נוספת, הערב נועד להורדת קצב.' },
   '2026-12-05': { title:'Cabo Blanco, Cabuya ומונטזומה', g:'לא חובה', acts:[
@@ -501,7 +502,7 @@ const INFO = {
     'להביא את מייל האישור ותעודה מזהה עם תמונה.',
     'פתוח 7:30–16:00. טלפון: ‎+506 2645 5122.' ]},
   'Curi-Cancha Reserve': { q:'Curi-Cancha Reserve, Monteverde' },
-  'מעבורת Puntarenas–Paquera': { q:'Naviera Tambor Puntarenas ferry terminal', ticket:{ code:'1736309', txt:'מעבורת מוזמנת ושולמה באתר Naviera Tambor: ‎₡15,071.73. מספר הפניה 1736309, קבלה 632616451184.' }, info:['במייל יש רק אישור תשלום, בלי שעת הפלגה. לבדוק את השעה בכרטיס או באתר Naviera Tambor.','ההפלגה לוקחת כשעה.'] },
+  'מעבורת Puntarenas–Paquera': { q:'Naviera Tambor Puntarenas ferry terminal', ticket:{ doc:'docs/ferry.pdf', code:'VNSREG-1736309', txt:'כרטיס מוזמן: 4.12 בשעה 12:00 לפקרה, נהג ורכב פרטי (רכב שכור), ‎₡15,071.73 שולם. כרטיס VNSREG-1736309. להציג את קוד ה-QR ברציף.' }, info:['להתייצב 30 דקות לפני ההפלגה, אחרת מאבדים את המקום בלי שינוי או החזר.','שינויים רק עד 24 שעות לפני. שירות לקוחות בוואטסאפ: 8818-1004.','השעות יכולות להשתנות על ידי הרגולטור.','ההפלגה לוקחת כשעה.'] },
   'חוף ושקיעה': { q:'Playa Santa Teresa, Costa Rica' },
   'Cabo Blanco Absolute Natural Reserve': { q:'Reserva Natural Absoluta Cabo Blanco', info:[
     'פתוח רביעי–ראשון 8:00–16:00, סגור בשני ושלישי. 5.12 הוא שבת.',
@@ -557,7 +558,7 @@ const DAYX = {
   '2026-12-01': { via:['Rincón de la Vieja National Park, Las Pailas Sector','Catarata Oropéndola, Rincón de la Vieja','Río Negro Hot Springs, Hacienda Guachipelín'], bring:['2 ליטר מים','חטיף','נעלי הליכה','בגד ים לבוץ','מגבת ובגדים להחלפה','מזומן קולון','כרטיס SINAC','דרכון'] },
   '2026-12-02': { bring:['שכבות חמות','מעיל גשם','פנס לסיור לילה','דרכון','מייל אישור הסיור'] },
   '2026-12-03': { bring:['שכבות','מעיל גשם','נעליים עם אחיזה','מים','משקפת','דרכון','מייל אישור הסיור'] },
-  '2026-12-04': { bring:['בגד ים'], tip:'מעבורת Puntarenas–Paquera הוזמנה ושולמה. להגיע לרציף מוקדם, בדרך כלל כשעה לפני ההפלגה עם רכב.', link:{ t:'לוח הזמנים של Naviera Tambor', u:'https://www.google.com/search?q=' + encodeURIComponent('Naviera Tambor Puntarenas Paquera horario') } },
+  '2026-12-04': { bring:['בגד ים'], tip:'מעבורת 12:00 מפונטרנס. להתייצב ברציף עד 11:30.', link:{ t:'לוח הזמנים של Naviera Tambor', u:'https://www.google.com/search?q=' + encodeURIComponent('Naviera Tambor Puntarenas Paquera horario') } },
   '2026-12-05': { bring:['מים ואוכל קל','סנדלי שטח','קרם הגנה','בגד ים'] },
   '2026-12-06': { bring:['בגד ים','נעלי מים לבריכות הסלע'], tide:'Mal Pais Costa Rica' },
   '2026-12-07': { bring:['בגד ים'] },
