@@ -250,10 +250,10 @@ const FLIGHTS = {
   legs:[
     { dir:'הלוך', date:'2026-11-24', label:'שלישי 24.11', total:'26:15 שעות', departISO:'2026-11-24T01:00:00+02:00',
       segments:[
-        { flight:'LH 691', op:'Lufthansa', plane:'Airbus A321neo', seat:'19C · Extra Legroom', note:'עצירת ביניים באתונה 03:10–03:55, באותה טיסה',
+        { flight:'LH 691', op:'Lufthansa', plane:'Airbus A321neo', seat:'19C · Extra Legroom', note:'עצירת ביניים באתונה 03:10–03:55, באותה טיסה', bp:'כרטיס עלייה למטוס הונפק (במייל מ-SWISS). מסירת מזוודה: אזור A, קומה 3, עד 23:45. עלייה למטוס 00:30, השער נסגר 00:45. קבוצת עלייה 2.',
           from:{code:'TLV',city:'תל אביב',term:'טרמינל 3',time:'01:00',old:'05:15'}, to:{code:'FRA',city:'פרנקפורט',term:'טרמינל 1',time:'06:00',old:'08:55'} },
         { layover:'פרנקפורט', dur:'8:00 שעות' },
-        { flight:'LH 518', op:'Lufthansa', plane:'Boeing 787-9', seat:'16H · Extra Legroom',
+        { flight:'LH 518', op:'Lufthansa', plane:'Boeing 787-9', seat:'16H · Extra Legroom', bp:'כרטיס עלייה למטוס הונפק (במייל מ-SWISS). שער Z, עלייה למטוס 13:15, השער נסגר 13:40. קבוצת עלייה 6.',
           from:{code:'FRA',city:'פרנקפורט',term:'טרמינל 1',time:'14:00'}, to:{code:'SJO',city:'סן חוסה',term:'טרמינל M',time:'19:15'} }
       ]},
     { dir:'חזור', date:'2026-12-16', label:'רביעי 16.12', total:'16:30 שעות', departISO:'2026-12-16T16:40:00-06:00',
@@ -1035,7 +1035,7 @@ function segHTML(s){
     <div class="ends">${end(s.from)}
       <svg width="28" height="28" viewBox="0 0 24 24" role="img" aria-label="אל" style="color:var(--accent);flex-shrink:0"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M19 12H5m7 7-7-7 7-7"/></svg>
       ${end(s.to)}</div>
-    ${s.note ? `<div class="lay">${icon('clock',20,'var(--muted)')}<span>${s.note}</span></div>` : ''}<div class="meta"><span><b>${s.flight}</b> · ${s.op}</span><span>${s.plane}</span><span>מושב: ${s.seat}</span></div>
+    ${s.note ? `<div class="lay">${icon('clock',20,'var(--muted)')}<span>${s.note}</span></div>` : ''}<div class="meta"><span><b>${s.flight}</b> · ${s.op}</span><span>${s.plane}</span><span>מושב: ${s.seat}</span></div>${s.bp ? `<div class="lay">${icon('clock',20,'var(--accent)')}<span>${s.bp}</span></div>` : ''}
   </div>`;
 }
 
