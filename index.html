@@ -373,8 +373,7 @@ const PLAN = {
     { n:'הליכה קצרה בטבע', d:'מסלול קל אחר הצהריים.' },
     { n:'Night Walk', d:'18:00 סיור לילה מודרך באנגלית בשמורת יער העננים של מונטוורדה. להגיע לכניסה ב-17:45.', tip:'להביא את מייל האישור ותעודה מזהה עם תמונה.' } ]},
   '2026-12-03': { title:'יער העננים של מונטוורדה', acts:[
-    { n:'Monteverde Cloud Forest Preserve', d:'בוקר מוקדם ביער העננים. אחרי הסיור אפשר להמשיך למסלול קצר נוסף לבד.', g:'המלצה חזקה: Natural History Walk עם מדריך טבע.' },
-    { n:'Curi-Cancha Reserve', d:'עם מדריך, אם הדגש הוא איתור בעלי חיים וקצאלים.', kind:'alt' },
+    { n:'Monteverde Cloud Forest Preserve', d:'09:00 Guided Natural History Walk באנגלית. להגיע למרכז המבקרים Harriett Powell ב-08:45.', tip:'אחרי הסיור אפשר להמשיך למסלול קצר נוסף לבד.' },
     { n:'אחר הצהריים', d:'זמן חופשי, קפה ומנוחה.', kind:'free' } ],
     rule:'לא לעשות את שתי השמורות באותו יום.' },
   '2026-12-04': { title:'סנטה תרזה', acts:[
@@ -493,11 +492,12 @@ const INFO = {
   'Oropéndola Waterfall': { q:'Catarata Oropéndola, Rincón de la Vieja', ticket:{ code:'392705740', txt:'כרטיס מוזמן דרך Hacienda Guachipelín: 1.12 בשעה 12:00, מבוגר אחד. הזמנה GPWWJL, מספר 392705740.' }, info:['טלפון Hacienda Guachipelín: ‎+506 2690 2900.'] },
   'Río Negro Hot Springs': { q:'Río Negro Hot Springs, Hacienda Guachipelín', ticket:{ code:'392705742', txt:'כרטיס מוזמן דרך Hacienda Guachipelín: 1.12, 15:00–17:00, מעיינות ובוץ, מבוגר אחד. הזמנה GPWWJL, מספר 392705742.' }, info:['בתוך Hacienda Guachipelín, ליד הדרך ל-Las Pailas.','טלפון: ‎+506 2690 2900.'] },
   'Santa Elena': { q:'Santa Elena, Monteverde' },
-  'Night Walk': { q:'Monteverde Cloud Forest Preserve entrance', ticket:{ code:'AS-SNXC-60362', txt:'כרטיס מוזמן: Guided Night Walk ב-2.12 בשעה 18:00, מבוגר אחד, ‎$49. נקודת מפגש: הכניסה לשמורת Monteverde Cloud Forest. קוד הזמנה AS-SNXC-60362.' }, info:['להגיע 15 דקות לפני.','להביא את מייל האישור ותעודה מזהה עם תמונה.','לשינויים: ‎+506 2645 5122.'] },
-  'Monteverde Cloud Forest Preserve': { q:'Monteverde Cloud Forest Biological Reserve', info:[
-    'כרטיס נפרד לכל מסלול, מראש. עד 26 איש בכל חלון זמן.',
-    'פתוח 7:30–16:00. אוספים את הכרטיסים במרכז המבקרים, כק"מ וחצי לפני השמורה, ומשם יש הסעה.',
-    'מי שמאחר מפסיד את ההזמנה בלי החזר.' ]},
+  'Night Walk': { q:'10.30259691,-84.79581368', ticket:{ code:'AS-SNXC-60362', txt:'כרטיס מוזמן: Guided Night Walk ב-2.12 בשעה 18:00, מבוגר אחד, ‎$49. נקודת מפגש: הכניסה לשמורת Monteverde Cloud Forest. קוד הזמנה AS-SNXC-60362.' }, info:['להגיע 15 דקות לפני.','להביא את מייל האישור ותעודה מזהה עם תמונה.','לשינויים: ‎+506 2645 5122.'] },
+  'Monteverde Cloud Forest Preserve': { q:'10.300541,-84.8036438', ticket:{ code:'AS-LQPC-60364', txt:'כרטיס מוזמן: Guided Natural History Walk ב-3.12 בשעה 09:00, מבוגר אחד, ‎$49. קוד הזמנה AS-LQPC-60364.' }, info:[
+    'צ׳ק־אין רק במרכז המבקרים Harriett Powell (הכניסה הרשמית), עם חניה חינם. אסור לחנות בכביש או להגיע לנקודה אחרת.',
+    'להגיע 15 דקות לפני. מי שמאחר מפסיד את הכרטיס.',
+    'להביא את מייל האישור ותעודה מזהה עם תמונה.',
+    'פתוח 7:30–16:00. טלפון: ‎+506 2645 5122.' ]},
   'Curi-Cancha Reserve': { q:'Curi-Cancha Reserve, Monteverde' },
   'חוף ושקיעה': { q:'Playa Santa Teresa, Costa Rica' },
   'Cabo Blanco Absolute Natural Reserve': { q:'Reserva Natural Absoluta Cabo Blanco', info:[
@@ -553,7 +553,7 @@ const DAYX = {
   '2026-11-30': { via:['Tenorio Volcano National Park, El Pilón entrance'], bring:['נעליים עם אחיזה','מעיל גשם','מים וחטיף','מזומן לחניה','כרטיס SINAC','דרכון'] },
   '2026-12-01': { via:['Rincón de la Vieja National Park, Las Pailas Sector','Catarata Oropéndola, Rincón de la Vieja','Río Negro Hot Springs, Hacienda Guachipelín'], bring:['2 ליטר מים','חטיף','נעלי הליכה','בגד ים לבוץ','מגבת ובגדים להחלפה','מזומן קולון','כרטיס SINAC','דרכון'] },
   '2026-12-02': { bring:['שכבות חמות','מעיל גשם','פנס לסיור לילה','דרכון','מייל אישור הסיור'] },
-  '2026-12-03': { bring:['שכבות','מעיל גשם','נעליים עם אחיזה','משקפת'] },
+  '2026-12-03': { bring:['שכבות','מעיל גשם','נעליים עם אחיזה','משקפת','דרכון','מייל אישור הסיור'] },
   '2026-12-04': { bring:['בגד ים'], tip:'אפשר לנסוע מסביב או דרך מעבורת Puntarenas–Paquera. אם בוחרים במעבורת, לבדוק לוח זמנים ולהזמין.', link:{ t:'מעבורת Puntarenas–Paquera', u:'https://www.google.com/search?q=' + encodeURIComponent('Naviera Tambor Puntarenas Paquera horario') } },
   '2026-12-05': { bring:['מים ואוכל קל','סנדלי שטח','קרם הגנה','בגד ים'] },
   '2026-12-06': { bring:['בגד ים','נעלי מים לבריכות הסלע'], tide:'Mal Pais Costa Rica' },
@@ -583,7 +583,7 @@ const TOBOOK = [
   { id:'oropendola', date:'2026-12-01', t:'Oropéndola – כרטיס כניסה', m:'הוזמן: 12:00, הזמנה GPWWJL', done:true },
   { id:'nightwalk', date:'2026-12-02', t:'Monteverde – סיור לילה', m:'הוזמן: 18:00, קוד AS-SNXC-60362', done:true },
   { id:'rionegro', date:'2026-12-01', t:'Río Negro Hot Springs – כרטיס יומי', m:'הוזמן: 15:00, הזמנה GPWWJL', done:true },
-  { id:'mvreserve', date:'2026-12-03', t:'Monteverde – כרטיס למסלול + Natural History Walk', m:'עד 26 איש בחלון זמן' },
+  { id:'mvreserve', date:'2026-12-03', t:'Monteverde – כרטיס למסלול + Natural History Walk', m:'הוזמן: 09:00, קוד AS-LQPC-60364', done:true },
   { id:'corcovado', date:'2026-12-08', t:'Corcovado – סיור מאורגן', m:'2–4 שבועות מראש' },
   { id:'cano', date:'2026-12-10', t:'Isla del Caño – סיור שנורקלינג' },
   { id:'tapanti', date:'2026-12-12', t:'Tapantí – כרטיס כניסה', m:'באתר SINAC', u:SINAC },
