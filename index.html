@@ -272,13 +272,14 @@ const CAR = {
   specs:'אוטומטי · 5 מקומות · מזגן · 4 דלתות',
   pickup:{ place:'שדה התעופה סן חוסה (SJO)', when:'שלישי 24.11 · 20:00', hours:'05:00–22:00' },
   dropoff:{ place:'שדה התעופה סן חוסה (SJO)', when:'רביעי 16.12 · 15:00', hours:'05:00–22:00' },
-  days:22, driver:'Menachem Shoua', flightNo:'LH518',
+  days:22, driver:'Menachem Shoua', flightNo:'LH518', supConf:'1364435', supPhone:'+506 2442 2422',
   deductible:'$1,130', deposit:'$1,130', fuel:'מלא למלא',
   included:['ביטוח נזק וגניבה (עם השתתפות עצמית)','צד ג׳ עד $1,500,000','ק"מ ללא הגבלה','מסי שדה ומע"מ','אופרן פלוס'],
   bring:['רישיון נהיגה ישראלי (פיזי)','רישיון נהיגה בינלאומי (פיזי)','דרכון','כרטיס אשראי בינלאומי על שם הנהג (עם קוד סודי)','שובר מודפס'],
   phone:'03-7951010', whatsapp:'+972 54-795-2020', email:'help@ofran.com',
-  notes:['הרכב נשמר עד שעה אחרי מועד האיסוף. הטיסה נוחתת ב-19:15, כך שיש מרווח קטן.','אסור לצאת עם הרכב מקוסטה ריקה.']
+  notes:['איסוף: נציג של Adobe מחכה באולם הנוסעים הנכנסים (Meet and greet) ומוביל לסניף.','הרכב נשמר עד שעה אחרי מועד האיסוף או עד סגירת הסניף ב-22:00, המוקדם מביניהם. הטיסה נוחתת ב-19:15, כך שיש מרווח קטן.','אסור לצאת עם הרכב מקוסטה ריקה. נהג נוסף: ‎$4.52 ליום, משלמים במקום.','לא מקבלים כרטיס דביט, Diners או תשלום בטלפון.']
 };
+CAR.doc = DOCBASE + 'docs/car.pdf';
 
 /* כל לילה במסלול – מתוך אישורי Booking.com */
 const HOTELS = [
@@ -1096,7 +1097,10 @@ function car(){
         <div><span>פיקדון באשראי</span><strong>${c.deposit}</strong></div>
         <div><span>דלק</span><strong>${c.fuel}</strong></div>
         <div><span>טיסה בשובר</span><strong>${c.flightNo}</strong></div>
+        <div><span>אישור Adobe</span><strong class="code">${c.supConf}</strong></div>
+        <div><span>טלפון Adobe בשדה</span><strong><a href="${telHref(c.supPhone)}">${c.supPhone}</a></strong></div>
       </div>
+      <a class="btn out" href="${c.doc}" target="_blank" rel="noopener">${icon('ticket',20)}שובר הרכב (PDF)</a>
       <button class="btn out" type="button" data-copy="${c.ref}">${icon('copy',20)}העתק מספר הזמנה</button>
     </section>
     <section class="card">
