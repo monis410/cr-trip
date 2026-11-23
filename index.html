@@ -279,7 +279,6 @@ const CAR = {
   phone:'03-7951010', whatsapp:'+972 54-795-2020', email:'help@ofran.com',
   notes:['איסוף: נציג של Adobe מחכה באולם הנוסעים הנכנסים (Meet and greet) ומוביל לסניף.','הרכב נשמר עד שעה אחרי מועד האיסוף או עד סגירת הסניף ב-22:00, המוקדם מביניהם. הטיסה נוחתת ב-19:15, כך שיש מרווח קטן.','אסור לצאת עם הרכב מקוסטה ריקה. נהג נוסף: ‎$4.52 ליום, משלמים במקום.','לא מקבלים כרטיס דביט, Diners או תשלום בטלפון.']
 };
-CAR.doc = DOCBASE + 'docs/car.pdf';
 
 /* כל לילה במסלול – מתוך אישורי Booking.com */
 const HOTELS = [
@@ -323,6 +322,7 @@ const HOTEL_LL = {
   puertoviejo:[9.63698,-82.69207], sj2:[9.93573,-84.06290]
 };
 HOTELS.forEach(h => { h.ll = HOTEL_LL[h.id]; h.doc = DOCBASE + 'docs/' + h.id + '.pdf'; });
+CAR.doc = DOCBASE + 'docs/car.pdf';
 const llStr = h => h.ll ? h.ll.join(',') : `${h.name}, ${h.place}, Costa Rica`;
 
 /* זמני נסיעה משוערים בין מקומות הלינה – לבדוק ב-Waze ביום הנסיעה */
