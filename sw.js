@@ -1,5 +1,5 @@
 /* שומר את האפליקציה בטלפון כדי שתעבוד גם בלי קליטה. להעלות את המספר בכל עדכון */
-const VERSION = 'cr-v32';
+const VERSION = 'cr-v33';
 const SHELL = ['./', './index.html', './manifest.webmanifest', './icons/icon-180.png', './icons/icon-192.png', './icons/icon-512.png', './icons/icon-maskable-512.png',
   ...['sj1','fortuna','bijagua','rincon','monteverde','teresa','dominical','orosi','puertoviejo','sj2','poas','mistico','float','tenorio','pailas','ferry','ferry2','tapanti','car'].map(id => './docs/' + id + '.pdf')];
 
@@ -17,9 +17,17 @@ self.addEventListener('fetch', e => {
   const url = new URL(req.url);
   // תחזית: תמיד מהרשת. אם אין קליטה, האפליקציה משתמשת בתחזית האחרונה ששמרה
   if (url.hostname === 'api.open-meteo.com') return;
+  // כרטיסים ואישורים (PDF): קודם מהזיכרון, כדי שייפתחו גם בלי קליטה
+  if (url.pathname.endsWith('.pdf')) {
+    e.respondWith(caches.match(url.href, { ignoreSearch: true }).then(hit => hit || fetch(req).then(r => {
+      if (r.ok) { const copy = r.clone(); caches.open(VERSION).then(c => c.put(url.href, copy)); }
+      return r;
+    })));
+    return;
+  }
   // הדף עצמו: קודם מהרשת כדי לקבל עדכונים, ואם אין קליטה – מהזיכרון
   if (req.mode === 'navigate') {
-    e.respondWith(fetch(req).then(r => { const copy = r.clone(); caches.open(VERSION).then(c => c.put('./index.html', copy)); return r; })
+    e.respondWith(fetch(req).then(r => { if (r.ok) { const copy = r.clone(); caches.open(VERSION).then(c => c.put('./index.html', copy)); } return r; })
       .catch(() => caches.match('./index.html')));
     return;
   }
