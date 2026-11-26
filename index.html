@@ -352,7 +352,8 @@ const PLAN = {
     rule:'פעילות טבע בבוקר ומנוחה במעיינות אחר הצהריים. לא להוסיף פעילות שלישית.' },
   '2026-11-27': { title:'ארנל 1968', acts:[
     { n:'Arenal 1968', d:'מסלול הליכה בשדות הלבה והיער למרגלות הר הגעש ארנל.', tip:'לבחור במסלול הבינוני ולא בארוך ביותר.', g:'לא נדרש' },
-    { n:'אחר הצהריים', d:'זמן חופשי ומנוחה.', kind:'free' } ]},
+    { n:'אחר הצהריים', d:'זמן חופשי ומנוחה.', kind:'free' },
+    { n:'Night Tour La Fortuna', d:'18:00 סיור לילה מודרך ביער הגשם: צפרדעים, חרקים, זוחלים ולפעמים יונקים. להגיע ב-17:40.', tip:'כ-20 דקות נסיעה מהמלון, לצאת עד 17:15. לפתוח את נקודת המפגש בגוגל מפות בלבד, לא ב-Apple Maps.' } ]},
   '2026-11-28': { title:'Safari Float וקפה־שוקולד', acts:[
     { n:'Peñas Blancas Wildlife Safari Float', d:'8:00. שיט רגוע בנהר לצפייה בקופים, עצלנים, איגואנות וציפורים.', g:'מומלץ מאוד. איתור בעלי החיים הוא לב החוויה.' },
     { n:'Don Juan Coffee & Chocolate Tour', d:'15:50. סיור מודרך על גידול ועיבוד קפה וקקאו, כולל טעימות.', tip:'בין השיט לסיור יש זמן לארוחת צהריים ולמנוחה במלון.' } ]},
@@ -447,6 +448,7 @@ const DIFF = {
   'Río Negro Hot Springs': ['e','שבילים קצרים בין הבריכות, חלקלקים מבוץ ומים.'],
   'Santa Elena': ['e','הליכה בעיירה.'],
   'הליכה קצרה בטבע': ['e','לבחור שביל קצר ושטוח.'],
+  'Night Tour La Fortuna': ['m','הליכה איטית בחושך על שביל לא אחיד, כשעתיים. פנס חזק עוזר.'],
   'Night Walk': ['m','כשעתיים בקצב איטי, בחושך ועל שביל לא אחיד.'],
   'Monteverde Cloud Forest Preserve': ['e','מסלול Heart of the Forest: 2.8 ק"מ, שטוח ברובו, עם שורשים ובוץ. מסלול Continental Divide (4.1 ק"מ, עליות) הוא בינוני.'],
   'Curi-Cancha Reserve': ['m','שבילים עפר עם עליות וירידות מתונות.'],
@@ -484,6 +486,7 @@ const INFO = {
   'Místico Arenal Hanging Bridges': { q:'Mistico Arenal Hanging Bridges Park', ticket:{ doc:'docs/mistico.pdf', code:'B-G8V86ZG', txt:'כרטיס מוזמן: Self-Guided Walk, 26.11 בשעה 9:30, להגיע בזמן. כתב הוויתור כבר חתום. להציג בכניסה את קוד ה-QR שבכרטיס. מותר להכניס רק מים.' }, info:['הגעה: אחרי שחוצים את סכר אגם ארנל יש שלט גדול של Mistico Park. פונים ימינה ונוסעים 2 ק"מ עד סוף הדרך, לבודקה של השומר.','כולל גם את שביל Pachucos ואת מפל Blue Morpho.','ביטול עם החזר מלא עד 48 שעות לפני. טלפון: ‎+506 2479 8282.'] },
   'Tabacón Hot Springs': { q:'Tabacón Thermal Resort & Spa', ticket:{ code:'TY1BNAT', txt:'כרטיס מוזמן: Day Pass – Thermal Experience ל-26.11, מבוגר אחד, שולם ‎$99. קוד הזמנה TY1BNAT.' }, info:['אפשר לצאת ולהיכנס שוב חופשי במשך כל היום.','חניית ואלה חינם.','מומלץ מאוד להביא נעלי מים. אסור להכניס אוכל ושתייה מבחוץ.','צמיד חכם שלא מוחזר עולה ‎$50.','ביטול פחות מ-15 יום לפני ההגעה: אין החזר. טלפון: ‎+506 2519 1999.'] },
   'Arenal 1968': { q:'Arenal 1968 Volcano View and Lava Trails' },
+  'Night Tour La Fortuna': { q:'10.4231321,-84.5882672', meet:'https://maps.app.goo.gl/ySrSAGJyNDR73oZU6', ticket:{ code:'B-9G4VJZ7', u:'https://book.peek.com/bp/20a87bf1-033f-44e9-aeb3-fcd55d6d5c85/b_9g4vjz7', ul:'כרטיס ב-Peek', txt:'סיור מוזמן: Night Tour La Fortuna ב-27.11 בשעה 18:00, מבוגר אחד. אישור B-9G4VJZ7 (Peek).' }, info:['נקודת מפגש: כפתור "נקודת מפגש" למטה פותח את הקישור הרשמי בגוגל מפות. לא להשתמש ב-Apple Maps.','להגיע 20 דקות לפני, ב-17:40.','כלול: מים, כניסה ומדריך מוסמך ICT. ראיית חיות לא מובטחת.','ביטול: החזר מלא עד 48 שעות לפני, 50% קנס בין 48 ל-24 שעות, פחות מ-24 שעות אין החזר.','וואטסאפ: ‎+506 6001 7613. מייל: info@jungleadventurescostarica.com'] },
   'Don Juan Coffee & Chocolate Tour': { q:'Don Juan Coffee Tour, La Fortuna', ticket:{ code:'B-E8V8APD', txt:'כרטיס מוזמן: 28.11 בשעה 15:50, מבוגר אחד. מפגש ב-Don Juan Tours Arenal. אישור B-E8V8APD. להציג בכניסה את קוד ה-QR מהמייל של Peek.' }, info:['להביא דוחה יתושים.','ביטול עד 24 שעות לפני. טלפון: ‎+506 8483 7999.'] },
   'Peñas Blancas Wildlife Safari Float': { q:'Desafio Adventure Company, La Fortuna', ticket:{ doc:'docs/float.pdf', code:'WE4-03419', txt:'שיט מוזמן ושולם (‎$81.36) עם Desafío Adventure Company. 28.11 בשעה 8:00, מבוגר אחד. מספר הזמנה WE4-03419.' }, info:['כולל הסעה הלוך ושוב. באתר של Desafío אין נקודת מפגש אחת: בוחרים נקודת איסוף מרשימה, ו-Hotel Roca Negra (המלון שלנו) נמצא בה.','באישור לא כתוב איזו נקודת איסוף נבחרה ובאיזו שעה האיסוף. לאשר מול Desafío שהאיסוף מהמלון ולבקש את שעת האיסוף.','איחור לנקודת האיסוף: אין החזר.','אורך: כ-3 שעות, כולל חטיף. חתירה קלה בלבד, עם מדריך טבע.'] },
   'Río Celeste Tubing': { q:'Rio Celeste Tubing, Bijagua' },
@@ -564,7 +567,7 @@ const DAYX = {
   '2026-11-24': { bring:['דרכון','שובר רכב מודפס','רישיון נהיגה בינלאומי'] },
   '2026-11-25': { via:['Poás Volcano National Park','Hacienda Alsacia Starbucks Coffee Farm, Alajuela'], bring:['שכבות חמות','מעיל גשם','אישור SINAC בטלפון','דרכון'] },
   '2026-11-26': { bring:['בגד ים ומגבת','נעלי הליכה','משקפת'] },
-  '2026-11-27': { bring:['נעלי הליכה','כובע','מים'] },
+  '2026-11-27': { bring:['נעלי הליכה','כובע','מים','לערב: דוחה יתושים, מכנסיים ארוכים ונעליים סגורות'] },
   '2026-11-28': { bring:['דוחה יתושים','בגדים שיכולים להירטב','בגדים יבשים להחלפה','נעליים סגורות שמתאימות למים','קרם הגנה','כובע','משקפת'] },
   '2026-11-30': { via:['Tenorio Volcano National Park, El Pilón entrance'], bring:['נעליים עם אחיזה','מעיל גשם','מים וחטיף','מזומן לחניה','כרטיס SINAC','דרכון'] },
   '2026-12-01': { via:['Rincón de la Vieja National Park, Las Pailas Sector','Catarata Oropéndola, Rincón de la Vieja','Río Negro Hot Springs, Hacienda Guachipelín'], bring:['2 ליטר מים','חטיף','נעלי הליכה','בגד ים לבוץ','מגבת ובגדים להחלפה','מזומן קולון','כרטיס SINAC','דרכון'] },
@@ -592,6 +595,7 @@ const TOBOOK = [
   { id:'mistico', date:'2026-11-26', t:'Místico – כרטיס כניסה', m:'הוזמן: 9:30, אישור B-G8V86ZG (סיור עצמאי, בלי מדריך)', done:true },
   { id:'misticowaiver', date:'2026-11-25', t:'Místico – לחתום על כתב ויתור (waiver)', m:'נחתם', done:true },
   { id:'tabacon', date:'2026-11-26', t:'Tabacón – כרטיס יומי', m:'הוזמן ושולם: Day Pass, קוד TY1BNAT', done:true },
+  { id:'nighttourlf', date:'2026-11-27', t:'Night Tour La Fortuna – סיור לילה', m:'הוזמן: 27.11 בשעה 18:00, אישור B-9G4VJZ7', done:true },
   { id:'donjuan', date:'2026-11-28', t:'Don Juan – סיור קפה ושוקולד', m:'הוזמן: 28.11 בשעה 15:50, אישור B-E8V8APD', done:true },
   { id:'float', date:'2026-11-28', t:'Peñas Blancas Safari Float', m:'הוזמן: 8:00, Desafío, הזמנה WE4-03419', done:true },
   { id:'tenorio', date:'2026-11-30', t:'Tenorio – כרטיס כניסה', m:'הוזמן: כניסה 08:00–08:40, אימות C0A9F2', done:true },
@@ -917,6 +921,8 @@ function actsHTML(p){
       if (inf.q) { links.push(lk(mapsUrl(inf.q), 'מפה', 'pin')); links.push(lk(wazeUrl(inf.q), 'Waze')); }
       if (inf.ticket && inf.ticket.doc) links.push(lk((typeof DOCBASE !== 'undefined' ? DOCBASE : '') + inf.ticket.doc, 'כרטיס כניסה (PDF)', 'ticket'));
       else if (inf.book) links.push(lk(inf.book, 'כרטיסים ב-SINAC', 'ticket'));
+      if (inf.ticket && inf.ticket.u) links.push(lk(inf.ticket.u, inf.ticket.ul || 'אישור הזמנה', 'ticket'));
+      if (inf.meet) links.push(lk(inf.meet, 'נקודת מפגש (גוגל מפות)', 'pin'));
       return `<li class="act ${a.kind || ''}">
       <div class="an"><b>${esc(a.n)}</b>${diffChip(a.n)}${a.kind ? `<span class="kchip">${KIND[a.kind]}</span>` : ''}</div>
       <p>${esc(a.d)}</p>
