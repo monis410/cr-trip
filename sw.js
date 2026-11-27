@@ -1,5 +1,5 @@
 /* שומר את האפליקציה בטלפון כדי שתעבוד גם בלי קליטה. להעלות את המספר בכל עדכון */
-const VERSION = 'cr-v35';
+const VERSION = 'cr-v36';
 const SHELL = ['./', './index.html', './manifest.webmanifest', './icons/icon-180.png', './icons/icon-192.png', './icons/icon-512.png', './icons/icon-maskable-512.png',
   ...['sj1','fortuna','bijagua','rincon','monteverde','teresa','dominical','orosi','puertoviejo','sj2','poas','mistico','float','tenorio','pailas','ferry','ferry2','tapanti','car'].map(id => './docs/' + id + '.pdf')];
 
